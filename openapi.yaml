@@ -1,0 +1,134 @@
+openapi: 3.1.0
+info:
+  title: Token-Based Peer-To-Peer Learning Platform API
+  version: 0.1.0
+  description: Sprint 1 draft API contract for authentication, token wallet, and lesson bookings.
+paths:
+  /auth/login:
+    post:
+      summary: OAuth login
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [provider, token]
+              properties:
+                provider:
+                  type: string
+                  enum: [google, github]
+                token:
+                  type: string
+              example:
+                provider: github
+                token: oauth2_access_token_example
+      responses:
+        '200':
+          description: Successfully authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                  userId:
+                    type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /wallet/balance:
+    get:
+      summary: Get current token balance and transaction history
+      operationId: getWalletBalance
+      responses:
+        '200':
+          description: Wallet balance and recent history
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [userId, tokenBalance]
+                properties:
+                  userId:
+                    type: string
+                    example: usr-101
+                  tokenBalance:
+                    type: integer
+                    example: 50
+        '401':
+          description: Unauthorized
+
+  /bookings:
+    post:
+      summary: Request or book a lesson slot
+      operationId: createBooking
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [educatorId, startsAt, endsAt, tokenCost]
+              properties:
+                educatorId:
+                  type: string
+                  example: edu-202
+                startsAt:
+                  type: string
+                  format: date-time
+                  example: "2026-11-01T10:00:00Z"
+                endsAt:
+                  type: string
+                  format: date-time
+                  example: "2026-11-01T11:00:00Z"
+                tokenCost:
+                  type: integer
+                  example: 10
+      responses:
+        '201':
+          description: Booking successfully created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  bookingId:
+                    type: string
+                    example: bkg-9901
+                  status:
+                    type: string
+                    enum: [PENDING, CONFIRMED, CANCELLED]
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          description: Requested slot conflicts or insufficient token balance
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+components:
+  schemas:
+    Problem:
+      type: object
+      required: [title, status, code]
+      properties:
+        title:
+          type: string
+        status:
+          type: integer
+        code:
+          type: string
+          example: INSUFFICIENT_TOKENS
+        detail:
+          type: string
+  responses:
+    BadRequest:
+      description: Invalid input parameters
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'

@@ -1,130 +1,622 @@
 openapi: 3.1.0
 info:
   title: Token-Based Peer-To-Peer Learning Platform API
-  version: 0.1.0
-  description: Sprint 1 draft API contract for authentication, token wallet, and lesson bookings.
+  version: 0.2.0
+  description: >-
+    Sprint 1 draft API contract for authentication, the token wallet, lesson
+    listings with price guidance, and lesson bookings with token escrow.
+    The token cost of a lesson is always taken from the server-side lesson
+    listing, never from the client. Tokens are held when a booking is confirmed,
+    released to the educator when the lesson is completed, and refunded when it
+    is cancelled or the educator does not attend.
+  license:
+    name: Apache 2.0
+    identifier: Apache-2.0
+servers:
+  - url: /api
+    description: Relative to the host where the platform is deployed
+security:
+  - bearerAuth: []
+tags:
+  - name: Auth
+    description: Sign-in through an external OAuth provider
+  - name: Wallet
+    description: Token balance and ledger
+  - name: Lessons
+    description: Lesson listings and price guidance
+  - name: Bookings
+    description: Lesson bookings, escrow, disputes, and ratings
+
 paths:
   /auth/login:
     post:
-      summary: OAuth login
+      tags: [Auth]
+      summary: Sign in with an OAuth provider token
       operationId: loginUser
+      security: []
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              required: [provider, token]
-              properties:
-                provider:
-                  type: string
-                  enum: [google, github]
-                token:
-                  type: string
-              example:
-                provider: github
-                token: oauth2_access_token_example
+              $ref: '#/components/schemas/LoginRequest'
       responses:
         '200':
           description: Successfully authenticated
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  accessToken:
-                    type: string
-                  userId:
-                    type: string
+                $ref: '#/components/schemas/AuthSession'
         '400':
           $ref: '#/components/responses/BadRequest'
+        '401':
+          description: The provider token is invalid or expired
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                title: Invalid provider token
+                status: 401
+                code: INVALID_PROVIDER_TOKEN
 
   /wallet/balance:
     get:
-      summary: Get current token balance and transaction history
+      tags: [Wallet]
+      summary: Get the current token balance
       operationId: getWalletBalance
       responses:
         '200':
-          description: Wallet balance and recent history
+          description: Current balance, including tokens held in escrow
           content:
             application/json:
               schema:
-                type: object
-                required: [userId, tokenBalance]
-                properties:
-                  userId:
-                    type: string
-                    example: usr-101
-                  tokenBalance:
-                    type: integer
-                    example: 50
+                $ref: '#/components/schemas/WalletBalance'
         '401':
-          description: Unauthorized
+          $ref: '#/components/responses/Unauthorized'
+
+  /wallet/transactions:
+    get:
+      tags: [Wallet]
+      summary: List ledger entries of the current user
+      operationId: listWalletTransactions
+      parameters:
+        - in: query
+          name: limit
+          required: false
+          schema: { type: integer, minimum: 1, maximum: 100, default: 20 }
+      responses:
+        '200':
+          description: Ledger entries, newest first
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LedgerEntry'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /lessons:
+    get:
+      tags: [Lessons]
+      summary: Search lesson listings
+      operationId: searchLessons
+      parameters:
+        - in: query
+          name: subject
+          required: false
+          schema: { type: string, example: Linear Algebra }
+        - in: query
+          name: from
+          required: false
+          description: Only listings with an available slot at or after this time
+          schema: { type: string, format: date-time }
+        - in: query
+          name: to
+          required: false
+          description: Only listings with an available slot before this time
+          schema: { type: string, format: date-time }
+        - in: query
+          name: maxPrice
+          required: false
+          schema: { type: integer, minimum: 1 }
+      responses:
+        '200':
+          description: Matching listings with price guidance
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LessonListing'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags: [Lessons]
+      summary: Create a lesson listing as an educator
+      operationId: createLesson
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewLessonListing'
+      responses:
+        '201':
+          description: Listing created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LessonListing'
+        '400':
+          description: >-
+            Invalid input, or the price is outside ±50% of the suggested
+            average price for similar lessons
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                title: Price out of range
+                status: 400
+                code: PRICE_OUT_OF_RANGE
+                detail: The price must be between 5 and 15 tokens for this subject.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /lessons/price-suggestion:
+    get:
+      tags: [Lessons]
+      summary: Get the suggested price for a subject and level
+      operationId: getPriceSuggestion
+      parameters:
+        - in: query
+          name: subject
+          required: true
+          schema: { type: string, example: Linear Algebra }
+        - in: query
+          name: level
+          required: true
+          schema:
+            $ref: '#/components/schemas/LessonLevel'
+      responses:
+        '200':
+          description: Suggested price and allowed range
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceSuggestion'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
 
   /bookings:
     post:
-      summary: Request or book a lesson slot
+      tags: [Bookings]
+      summary: Request a lesson slot
+      description: >-
+        The token cost is copied from the lesson listing on the server. The
+        pupil's balance is checked now and the tokens are held when the
+        educator confirms the booking.
       operationId: createBooking
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              required: [educatorId, startsAt, endsAt, tokenCost]
-              properties:
-                educatorId:
-                  type: string
-                  example: edu-202
-                startsAt:
-                  type: string
-                  format: date-time
-                  example: "2026-11-01T10:00:00Z"
-                endsAt:
-                  type: string
-                  format: date-time
-                  example: "2026-11-01T11:00:00Z"
-                tokenCost:
-                  type: integer
-                  example: 10
+              $ref: '#/components/schemas/NewBooking'
       responses:
         '201':
-          description: Booking successfully created
+          description: Booking requested
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  bookingId:
-                    type: string
-                    example: bkg-9901
-                  status:
-                    type: string
-                    enum: [PENDING, CONFIRMED, CANCELLED]
+                $ref: '#/components/schemas/Booking'
         '400':
           $ref: '#/components/responses/BadRequest'
-        '409':
-          description: Requested slot conflicts or insufficient token balance
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          description: >-
+            The user cannot book this lesson (own lesson, or the limit of
+            repeated lessons with the same educator is reached)
           content:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Problem'
+              examples:
+                selfBooking:
+                  value:
+                    title: Self-booking is not allowed
+                    status: 403
+                    code: SELF_BOOKING_NOT_ALLOWED
+                repeatLimit:
+                  value:
+                    title: Repeated lesson limit reached
+                    status: 403
+                    code: REPEAT_LIMIT_REACHED
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: The slot is not available or the balance is insufficient
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                slotUnavailable:
+                  value:
+                    title: Slot unavailable
+                    status: 409
+                    code: SLOT_UNAVAILABLE
+                insufficientTokens:
+                  value:
+                    title: Insufficient tokens
+                    status: 409
+                    code: INSUFFICIENT_TOKENS
+
+  /bookings/{bookingId}:
+    parameters:
+      - $ref: '#/components/parameters/BookingId'
+    get:
+      tags: [Bookings]
+      summary: Get a booking
+      operationId: getBooking
+      responses:
+        '200':
+          description: The booking
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /bookings/{bookingId}/confirm:
+    parameters:
+      - $ref: '#/components/parameters/BookingId'
+    post:
+      tags: [Bookings]
+      summary: Confirm a booking as the educator and hold the pupil's tokens
+      operationId: confirmBooking
+      responses:
+        '200':
+          description: Booking confirmed; tokens are held in escrow
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+
+  /bookings/{bookingId}/cancel:
+    parameters:
+      - $ref: '#/components/parameters/BookingId'
+    post:
+      tags: [Bookings]
+      summary: Cancel a booking and refund held tokens
+      operationId: cancelBooking
+      responses:
+        '200':
+          description: Booking cancelled; held tokens are refunded to the pupil
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+
+  /bookings/{bookingId}/disputes:
+    parameters:
+      - $ref: '#/components/parameters/BookingId'
+    post:
+      tags: [Bookings]
+      summary: Open a dispute within 24 hours after the lesson end time
+      description: >-
+        Without a dispute, the lesson is completed automatically 24 hours after
+        its end time and the held tokens are released to the educator. A dispute
+        keeps the tokens held until an administrator resolves it.
+      operationId: openDispute
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewDispute'
+      responses:
+        '201':
+          description: Dispute opened; booking status is DISPUTED
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dispute'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: The dispute window has closed or a dispute already exists
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                title: Dispute window closed
+                status: 409
+                code: DISPUTE_WINDOW_CLOSED
+
+  /bookings/{bookingId}/ratings:
+    parameters:
+      - $ref: '#/components/parameters/BookingId'
+    post:
+      tags: [Bookings]
+      summary: Rate the other participant of a completed lesson
+      operationId: rateBooking
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewRating'
+      responses:
+        '201':
+          description: Rating saved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rating'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: The lesson is not completed or it was already rated by this user
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                title: Already rated
+                status: 409
+                code: ALREADY_RATED
 
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Access token returned by /auth/login
+
+  parameters:
+    BookingId:
+      in: path
+      name: bookingId
+      required: true
+      schema: { type: string, example: bkg-9901 }
+
   schemas:
+    LoginRequest:
+      type: object
+      required: [provider, token]
+      properties:
+        provider:
+          type: string
+          enum: [google, github]
+        token:
+          type: string
+          description: Access token issued by the OAuth provider
+      example:
+        provider: github
+        token: oauth2_access_token_example
+
+    AuthSession:
+      type: object
+      required: [accessToken, userId]
+      properties:
+        accessToken: { type: string }
+        userId: { type: string, example: usr-101 }
+        isNewUser:
+          type: boolean
+          description: True on first sign-in, when the welcome balance is credited
+
+    WalletBalance:
+      type: object
+      required: [userId, tokenBalance, heldTokens]
+      properties:
+        userId: { type: string, example: usr-101 }
+        tokenBalance:
+          type: integer
+          minimum: 0
+          description: Tokens available to spend
+          example: 40
+        heldTokens:
+          type: integer
+          minimum: 0
+          description: Tokens held in escrow for confirmed bookings
+          example: 10
+
+    LedgerEntry:
+      type: object
+      required: [id, type, amount, createdAt]
+      properties:
+        id: { type: string, example: txn-5501 }
+        type:
+          type: string
+          enum: [WELCOME_GRANT, ESCROW_HOLD, ESCROW_RELEASE, ESCROW_REFUND, CONTENT_REWARD, ADMIN_CORRECTION]
+        amount:
+          type: integer
+          description: Positive for credits, negative for debits
+          example: -10
+        bookingId: { type: [string, 'null'], example: bkg-9901 }
+        createdAt: { type: string, format: date-time }
+
+    LessonLevel:
+      type: string
+      enum: [BEGINNER, INTERMEDIATE, ADVANCED]
+
+    PriceIndicator:
+      type: string
+      enum: [BELOW_AVERAGE, AROUND_AVERAGE, ABOVE_AVERAGE]
+
+    NewLessonListing:
+      type: object
+      required: [subject, level, durationMinutes, price]
+      properties:
+        subject: { type: string, example: Linear Algebra }
+        level:
+          $ref: '#/components/schemas/LessonLevel'
+        durationMinutes: { type: integer, minimum: 15, maximum: 180, example: 60 }
+        price:
+          type: integer
+          minimum: 1
+          description: Token price set by the educator, within ±50% of the suggested price
+          example: 12
+        description: { type: string }
+
+    LessonListing:
+      allOf:
+        - $ref: '#/components/schemas/NewLessonListing'
+        - type: object
+          required: [id, educatorId, suggestedPrice, priceIndicator]
+          properties:
+            id: { type: string, example: lsn-301 }
+            educatorId: { type: string, example: edu-202 }
+            educatorRating: { type: number, minimum: 0, maximum: 5, example: 4.6 }
+            suggestedPrice: { type: integer, example: 10 }
+            priceIndicator:
+              $ref: '#/components/schemas/PriceIndicator'
+
+    PriceSuggestion:
+      type: object
+      required: [subject, level, suggestedPrice, minPrice, maxPrice]
+      properties:
+        subject: { type: string, example: Linear Algebra }
+        level:
+          $ref: '#/components/schemas/LessonLevel'
+        suggestedPrice: { type: integer, example: 10 }
+        minPrice: { type: integer, example: 5 }
+        maxPrice: { type: integer, example: 15 }
+
+    NewBooking:
+      type: object
+      required: [lessonId, startsAt]
+      properties:
+        lessonId: { type: string, example: lsn-301 }
+        startsAt: { type: string, format: date-time, example: '2026-11-10T10:00:00Z' }
+
+    BookingStatus:
+      type: string
+      enum: [PENDING, CONFIRMED, COMPLETED, CANCELLED, NO_SHOW, DISPUTED]
+
+    Booking:
+      type: object
+      required: [id, lessonId, pupilId, educatorId, startsAt, endsAt, tokenCost, status]
+      properties:
+        id: { type: string, example: bkg-9901 }
+        lessonId: { type: string, example: lsn-301 }
+        pupilId: { type: string, example: usr-101 }
+        educatorId: { type: string, example: edu-202 }
+        startsAt: { type: string, format: date-time }
+        endsAt: { type: string, format: date-time }
+        tokenCost:
+          type: integer
+          description: Copied from the lesson listing by the server; read-only
+          readOnly: true
+          example: 12
+        status:
+          $ref: '#/components/schemas/BookingStatus'
+        meetingLink:
+          type: [string, 'null']
+          format: uri
+          description: Shared only with the booked participants after confirmation
+        disputeDeadline:
+          type: [string, 'null']
+          format: date-time
+          description: 24 hours after endsAt; after this time the lesson is completed automatically
+
+    NewDispute:
+      type: object
+      required: [reason]
+      properties:
+        reason:
+          type: string
+          enum: [EDUCATOR_ABSENT, LESSON_NOT_DELIVERED, OTHER]
+        details: { type: string }
+
+    Dispute:
+      type: object
+      required: [id, bookingId, reason, status, createdAt]
+      properties:
+        id: { type: string, example: dsp-77 }
+        bookingId: { type: string, example: bkg-9901 }
+        reason:
+          type: string
+          enum: [EDUCATOR_ABSENT, LESSON_NOT_DELIVERED, OTHER]
+        status:
+          type: string
+          enum: [OPEN, RESOLVED_REFUND, RESOLVED_RELEASE]
+        createdAt: { type: string, format: date-time }
+
+    NewRating:
+      type: object
+      required: [score]
+      properties:
+        score: { type: integer, minimum: 1, maximum: 5, example: 5 }
+        comment: { type: string }
+
+    Rating:
+      allOf:
+        - $ref: '#/components/schemas/NewRating'
+        - type: object
+          required: [id, bookingId, raterId, rateeId]
+          properties:
+            id: { type: string, example: rtg-12 }
+            bookingId: { type: string, example: bkg-9901 }
+            raterId: { type: string, example: usr-101 }
+            rateeId: { type: string, example: edu-202 }
+
     Problem:
       type: object
       required: [title, status, code]
       properties:
-        title:
-          type: string
-        status:
-          type: integer
+        title: { type: string }
+        status: { type: integer }
         code:
           type: string
           example: INSUFFICIENT_TOKENS
-        detail:
-          type: string
+        detail: { type: string }
+
   responses:
     BadRequest:
       description: Invalid input parameters
@@ -132,3 +624,47 @@ components:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Problem'
+          example:
+            title: Invalid request
+            status: 400
+            code: VALIDATION_ERROR
+    Unauthorized:
+      description: Missing or invalid access token
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            title: Unauthorized
+            status: 401
+            code: UNAUTHORIZED
+    Forbidden:
+      description: The user is not a participant of this booking or lacks permission
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            title: Forbidden
+            status: 403
+            code: FORBIDDEN
+    NotFound:
+      description: The resource does not exist
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            title: Not found
+            status: 404
+            code: NOT_FOUND
+    Conflict:
+      description: The booking is not in a status that allows this action
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            title: Invalid status transition
+            status: 409
+            code: INVALID_STATUS_TRANSITION

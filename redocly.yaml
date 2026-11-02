@@ -1,0 +1,4 @@
+# Redocly CLI configuration used by the OpenAPI validation workflow.
+# "minimal" fails the check on invalid OpenAPI and reports style issues as warnings.
+extends:
+  - minimal

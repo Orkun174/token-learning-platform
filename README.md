@@ -102,11 +102,23 @@ Kodu pushlamak işin bittiği anlamına gelmez. Yazdığınız kodun ana projeye
 
 
 -GitHub reposuna tarayıcıdan girin.
--Ana ekranda beliren sarı/yeşil renkli "Compare \& pull request" butonuna basın.
+-Ana ekranda beliren sarı/yeşil renkli "Compare & pull request" butonuna basın.
 -Yönlendirmenin doğru olduğundan emin olun:
 -base: develop
 -compare: feature/sizin-daliniz
 -PR Başlığına yine commit mesajınızdaki gibi net bir açıklama yazın (Örn: feat: Add frontend auth system).
+-PR açıklamasını otomatik gelen şablona göre doldurun (bağlı issue, ne değişti, kontrol listesi).
 -Create pull request butonuna basın.
--Takımdan birinin (DevOps, Scrum Master veya Lead) kodunuzu inceleyip Approve (Onay) vermesini bekleyin. Onay almayan kodlar sisteme dahil edilmez.
+-Takımdan birinin (QA Engineer, DevOps, Scrum Master veya Lead) kodunuzu inceleyip Approve (Onay) vermesini bekleyin. Onay almayan kodlar sisteme dahil edilmez.
+
+
+
+ADIM 6: Birleştirme (Merge) ve Dokümanlar
+
+
+-PR'lar "Squash and merge" ile birleştirilir. Böylece bir PR'daki tüm commitler develop dalında tek ve temiz bir commit olur.
+-"Validate openapi.yaml" otomatik kontrolü (CI) geçmeyen PR birleştirilmez.
+-Geçmiş yeniden yazılmaz: main ve develop dallarına force-push yapılmaz.
+-Sprint teslimat dokümanları docs/ klasörüne eklenir ve docs/README.md içindeki tabloya link verilir.
+-Sprint sonunda develop → main PR'ı açılır ve main üzerinde sprint etiketi (örn: sprint-1) atılır.
 

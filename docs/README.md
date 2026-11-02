@@ -6,7 +6,7 @@ This page maps each Sprint 1 deliverable from the assignment to its GitHub user 
 |---|---|---|---|---|---|---|
 | 1 | Project Proposal | US04 | #3 | #33, #35, #37, #38, #39 | Azat Onur Yücesoy (ycesonur) | Project documentation |
 | 2 | System Vision and Boundary | US02 | #7 | #40, #41, #43, #44, #46 | Arda Eyce (exaltedo2) | [system-vision.md](system-vision.md) |
-| 3 | OpenAPI Draft | US05 | #5 | #30, #31, #32, #34, #36 | Berat Yücesoy (beratycsy) | [openapi.yaml](../openapi.yaml) |
+| 3 | OpenAPI Draft | US05 | #5 | #30, #31, #32, #34, #36 | Berat Nur Yücesoy (beratycsy) | [openapi.yaml](../openapi.yaml) |
 | 4 | Team Roles and RACI Matrix | US06 | #4 | #27, #28, #29 | Yusuf Enes Perçi (YusufEnes25) | Project documentation |
 | 5 | GitHub Repository and Git-Flow Workflow | US01 | #2 | #49, #50, #51, #52, #53 | Orkun Aydın Alper (Orkun174) | [README.md](../README.md) (developer workflow) |
 | 6 | Initial Product Backlog | US03 | #6 | #42, #45, #47, #48 | Alperen Vural (alperenvural20056) | Project documentation |

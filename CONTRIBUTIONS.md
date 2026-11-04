@@ -16,7 +16,8 @@ Each member records their own completed work below, with links to the related Gi
 
 **Completed work:**
 
-- _To be completed by the member._
+- Owner of the Project Proposal: https://github.com/Orkun174/token-learning-platform/issues/3
+- Added the proposal document to the repository: PR-LINKI
 
 ---
 

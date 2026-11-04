@@ -77,7 +77,11 @@ Each member records their own completed work below, with links to the related Gi
 
 **Completed work:**
 
-- _To be completed by the member._
+- Created the repository, the Git-Flow branches, and the Protect Main and Develop ruleset: https://github.com/Orkun174/token-learning-platform/issues/2
+- Added the initial OpenAPI specification: https://github.com/Orkun174/token-learning-platform/pull/1
+- Added the Git-Flow workflow documentation: https://github.com/Orkun174/token-learning-platform/pull/8
+- Reviewed and merged pull requests #57, #59, #61, #63, and #64.
+- Merged the Sprint 1 release pull request and created the sprint-1 release: https://github.com/Orkun174/token-learning-platform/pull/66
 
 ---
 

@@ -49,7 +49,9 @@ Each member records their own completed work below, with links to the related Gi
 
 **Completed work:**
 
-- _To be completed by the member._
+- Reviewed and validated the OpenAPI contract and recorded the result: https://github.com/Orkun174/token-learning-platform/issues/5
+- Reviewed the Git-Flow documentation pull request: https://github.com/Orkun174/token-learning-platform/pull/8
+- Reviewed the CONTRIBUTIONS and system vision pull request: https://github.com/Orkun174/token-learning-platform/pull/69
 
 ---
 

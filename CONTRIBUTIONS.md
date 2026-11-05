@@ -36,7 +36,9 @@ Each member records their own completed work below, with links to the related Gi
 - Updated the OpenAPI contract to v0.2.0 to match the system vision ([#63](https://github.com/Orkun174/token-learning-platform/pull/63)).
 - Opened the pull request that added the product backlog to the repository ([#64](https://github.com/Orkun174/token-learning-platform/pull/64)).
 - Added merge and documentation rules to the README ([#61](https://github.com/Orkun174/token-learning-platform/pull/61)).
+- Added this contributions file and the Word version of the System Vision and Boundary document ([#69](https://github.com/Orkun174/token-learning-platform/pull/69)).
 - Reviewed the Sprint 1 release pull request ([#66](https://github.com/Orkun174/token-learning-platform/pull/66)).
+- Reviewed the DevOps and QA contribution pull requests ([#74](https://github.com/Orkun174/token-learning-platform/pull/74), [#77](https://github.com/Orkun174/token-learning-platform/pull/77)).
 
 ---
 

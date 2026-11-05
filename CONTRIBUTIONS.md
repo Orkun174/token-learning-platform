@@ -66,7 +66,10 @@ Each member records their own completed work below, with links to the related Gi
 
 **Completed work:**
 
-- _To be completed by the member._
+- Owner of the Team Roles and RACI Matrix: https://github.com/Orkun174/token-learning-platform/issues/4
+- Reviewed the initial OpenAPI pull request: https://github.com/Orkun174/token-learning-platform/pull/1
+- Added the RACI document to the repository: https://github.com/Orkun174/token-learning-platform/pull/75
+
 
 ---
 

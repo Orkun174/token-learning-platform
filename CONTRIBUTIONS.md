@@ -101,4 +101,6 @@ Each member records their own completed work below, with links to the related Gi
 
 **Completed work:**
 
-- _To be completed by the member._
+- Owner of the Initial Product Backlog: https://github.com/Orkun174/token-learning-platform/issues/6
+- Recorded the completed backlog items in issues #6, #42, #45, #47, and #48.
+- Added the feature and task layers and the Word document: https://github.com/Orkun174/token-learning-platform/pull/79

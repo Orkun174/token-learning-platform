@@ -22,6 +22,29 @@ The backlog is grouped into nine epics that follow the in-scope features of the 
 | E8 Messaging | US-20 |
 | E9 Administration | US-21 |
 
+### 1.1 Features
+
+Each epic is divided into features, and each feature groups the user stories that deliver it.
+
+| Epic | ID | Feature | User stories |
+|---|---|---|---|
+| E1 | F-01 | Sign-in with an external provider | US-01 |
+| E1 | F-02 | User profile | US-02 |
+| E2 | F-03 | Welcome balance | US-03 |
+| E2 | F-04 | Balance and transaction history | US-04, US-05 |
+| E3 | F-05 | Price guidance | US-06 |
+| E3 | F-06 | Lesson listings and search | US-07, US-08 |
+| E4 | F-07 | Booking requests | US-09 |
+| E4 | F-08 | Token escrow | US-10, US-11, US-12 |
+| E4 | F-09 | Dispute handling | US-13, US-14 |
+| E5 | F-10 | Meeting links | US-15 |
+| E5 | F-11 | Email notifications | US-16 |
+| E6 | F-12 | Mutual ratings | US-17 |
+| E7 | F-13 | Free content publishing | US-18 |
+| E7 | F-14 | Capped content rewards | US-19 |
+| E8 | F-15 | Booking messages | US-20 |
+| E9 | F-16 | Audit logs and reports | US-21 |
+
 ## 2. Prioritized User Stories
 
 Stories are ordered by priority. Estimates are story points on the Fibonacci scale (1, 2, 3, 5, 8, 13). Each story is linked to the OpenAPI operation that implements it; "To be added" marks operations that will be added to the contract with the story. Owners are the proposed implementation owners.
@@ -73,3 +96,54 @@ Stories are ordered by priority. Estimates are story points on the Fibonacci sca
 | Booking follow-up (priority 10–15) | 26 | US-11, US-13, US-15, US-17, US-05, US-14 |
 | Supporting features (priority 16–21) | 22 | US-16, US-02, US-18, US-19, US-20, US-21 |
 | **Total** | **91** | 21 stories |
+
+## 6. Tasks
+
+Stories are broken into technical tasks, listed in story priority order. Each task is estimated and owned through its story: the story points and owner in Section 2 apply to all of its tasks.
+
+| ID | User story | Task |
+|---|---|---|
+| T-01 | US-01 | Verify Google and GitHub provider tokens on the server |
+| T-02 | US-01 | Create the user and session on first sign-in |
+| T-03 | US-01 | Test valid, invalid and expired tokens |
+| T-04 | US-04 | Derive tokenBalance and heldTokens from the ledger |
+| T-05 | US-04 | Add the balance endpoint and test the 401 case |
+| T-06 | US-03 | Grant WELCOME_GRANT once from the platform account |
+| T-07 | US-03 | Test that repeated sign-in grants nothing |
+| T-08 | US-06 | Calculate the average price by subject and level |
+| T-09 | US-06 | Add the price suggestion endpoint and test the 400 case |
+| T-10 | US-07 | Create the lesson listing model and endpoint |
+| T-11 | US-07 | Enforce the ±50% range and return PRICE_OUT_OF_RANGE |
+| T-12 | US-08 | Implement subject, time and maximum price filters |
+| T-13 | US-08 | Calculate priceIndicator for each listing |
+| T-14 | US-08 | Test empty results and invalid dates |
+| T-15 | US-09 | Create bookings with tokenCost copied from the listing |
+| T-16 | US-09 | Reject self-booking, taken slots and low balances |
+| T-17 | US-10 | Confirm the booking and write ESCROW_HOLD in one database transaction |
+| T-18 | US-10 | Test non-pending and concurrent confirmations |
+| T-19 | US-12 | Add the scheduled job that completes lessons after 24 hours |
+| T-20 | US-12 | Write ESCROW_RELEASE exactly once and test a repeated job run |
+| T-21 | US-11 | Add the cancel endpoint with ESCROW_REFUND |
+| T-22 | US-11 | Test that cancelling a completed booking returns 409 |
+| T-23 | US-13 | Add the dispute endpoint with the 24-hour window |
+| T-24 | US-13 | Stop automatic completion for disputed bookings |
+| T-25 | US-15 | Integrate the video API behind an interface with a stub |
+| T-26 | US-15 | Show the link only to the two participants |
+| T-27 | US-17 | Add the rating endpoint with one rating per lesson |
+| T-28 | US-17 | Update the user score from ratings |
+| T-29 | US-05 | List ledger entries newest first with a limit |
+| T-30 | US-05 | Test limits outside 1–100 |
+| T-31 | US-14 | Add the administrator resolution with a compensating ledger entry |
+| T-32 | US-14 | Log every resolution in the audit log |
+| T-33 | US-16 | Send confirmation and reminder emails through the service or stub |
+| T-34 | US-16 | Test that a failed email does not change the booking status |
+| T-35 | US-02 | Add profile fields and validate availability ranges |
+| T-36 | US-02 | Use skills and availability in lesson search |
+| T-37 | US-18 | Add content upload with file type validation |
+| T-38 | US-18 | Show published content on the profile |
+| T-39 | US-19 | Count unique users who completed at least one lesson |
+| T-40 | US-19 | Add the monthly reward job with the cap and CONTENT_REWARD entry |
+| T-41 | US-20 | Store and list messages for a booking |
+| T-42 | US-20 | Restrict messages to the two participants |
+| T-43 | US-21 | Add the audit log view for administrators |
+| T-44 | US-21 | Add the reported content view with a role check |

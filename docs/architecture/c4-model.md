@@ -5,7 +5,7 @@
 **Owner:** Arda Eyce (Architect)
 **GitHub issues:** #93 (S2-D4), #94 (Context and Container), #95 (Component)
 
-This document describes the architecture with the first three levels of the [C4 model](https://c4model.com/): System Context, Container, and Component. Each level zooms into one element of the level above, so the three diagrams use the same names. The diagrams are written in Mermaid, so GitHub renders them directly;
+This document describes the architecture with the first three levels of the [C4 model](https://c4model.com/): System Context, Container, and Component. Each level zooms into one element of the level above, so the three diagrams use the same names. The diagrams are written in Mermaid, so GitHub renders them directly.
 
 **Notation:** blue boxes are people, the dark box is our system or one of its containers, grey boxes are external systems, and the cylinder is a data store. Every arrow is labelled with its purpose and protocol.
 
@@ -55,7 +55,7 @@ flowchart TB
 
 ## 2. Level 2 – Containers
 
-The platform is a modular monolith deployed as five containers with Docker Compose. The API and the scheduler worker are two processes built from the same TypeScript code base, so business rules exist only once.
+The platform is a modular monolith deployed with Docker Compose. In C4 terms it has six containers: four that run code (Web Server, Web Application, API Application, Scheduler Worker) and two that hold data (Database and File Storage). File Storage is a Docker volume, not a running process, and the Web Application is built into the Web Server image and runs in the browser, so Docker Compose starts four services: `web`, `api`, `worker` and `db`. The API and the scheduler worker are two processes built from the same TypeScript code base, so business rules exist only once.
 
 ```mermaid
 flowchart TB
@@ -67,7 +67,7 @@ flowchart TB
         api["<b>API Application</b><br/>[Container: Node.js 20, NestJS, TypeScript]<br/>Implements openapi.yaml; business rules,<br/>escrow and ledger transactions"]
         worker["<b>Scheduler Worker</b><br/>[Container: Node.js 20, NestJS]<br/>Lesson completion, reminders,<br/>monthly content rewards"]
         db[("<b>Database</b><br/>[Container: PostgreSQL 16]<br/>Users, lessons, bookings,<br/>ledger, audit log")]
-        files[("<b>File Storage</b><br/>[Container: Docker volume]<br/>Uploaded content files")]
+        files[("<b>File Storage</b><br/>[Container: Docker volume, data only]<br/>Uploaded content files")]
     end
 
     oauth["<b>Google / GitHub OAuth</b><br/>[External System]"]
@@ -163,7 +163,8 @@ flowchart TB
     admin -- "reads" --> audit
     ledger -- "records every movement" --> audit
     worker -- "completes lessons" --> bookings
-    worker -- "CONTENT_REWARD" --> content
+    worker -- "monthly reward job" --> content
+    content -- "CONTENT_REWARD" --> ledger
     worker -- "reminders" --> notify
     meetings -- "HTTPS" --> video
     notify -- "SMTP" --> email
@@ -190,7 +191,7 @@ The operation IDs are the `operationId` values in [openapi.yaml](../../openapi.y
 | Disputes | Accepts disputes until `disputeDeadline`; lets administrators resolve them with refund, release or no-show | `openDispute`, `listDisputes`, `resolveDispute` | Bookings and Escrow, Audit Log | US-13, US-14 |
 | Ratings | Accepts one rating per participant per completed lesson and updates the user score | `rateBooking` | Bookings and Escrow, Users | US-17 |
 | Messages | Stores text messages of a booking; only its two participants can read or send them | `listBookingMessages`, `sendBookingMessage` | Bookings and Escrow | US-20 |
-| Content | Stores free content and files, rejects unsupported types, counts unique users who open it | `publishContent`, `listUserContents`, `getContent` | File storage, Bookings (who completed a lesson) | US-18, US-19 |
+| Content | Stores free content and files, rejects unsupported types, counts unique users who open it | `publishContent`, `listUserContents`, `getContent` | File storage, Bookings (who completed a lesson), Wallet and Ledger (`CONTENT_REWARD`) | US-18, US-19 |
 | Reports and Admin | Stores user reports and gives administrators read access to reports and the audit log | `createReport`, `listReports`, `listAuditLogs` | Audit Log | US-21 |
 | Wallet and Ledger | The only component that writes ledger entries; derives `tokenBalance` and `heldTokens`; rejects movements that would make a balance negative; prevents duplicate entries | `getWalletBalance`, `listWalletTransactions` | Audit Log | US-03, US-04, US-05, US-19 |
 | Audit Log | Append-only record of every ledger movement and administrator action | Internal only | – | US-14, US-21 |
@@ -203,9 +204,9 @@ The worker has no HTTP interface. It runs three jobs that call the same services
 
 | Job | Schedule | What it does | Safety rule |
 |---|---|---|---|
-| Lesson completion | Every 5 minutes | Completes `CONFIRMED` bookings whose `disputeDeadline` has passed and pays the educator with `ESCROW_RELEASE` | Locks the booking row; the unique ledger key `(booking, ESCROW_RELEASE)` makes a second run harmless (BR-13, NFR-08) |
+| Lesson completion | Every 5 minutes | Completes `CONFIRMED` bookings whose `disputeDeadline` has passed and pays the educator with `ESCROW_RELEASE` | Locks the booking row; the unique ledger key `release:{bookingId}` makes a second run harmless (BR-13, NFR-08) |
 | Lesson reminder | Every 15 minutes | Emails both participants of lessons that start within the next 24 hours | A reminder is marked as sent, so it is sent once |
-| Content reward | First day of each month | Pays 1 token per 10 unique users who opened the content and completed a lesson, at most 20 tokens per educator per month | The unique ledger key `(educator, CONTENT_REWARD, month)` allows one payment per month |
+| Content reward | First day of each month | Pays 1 token per 10 unique users who opened the content and completed a lesson, at most 20 tokens per educator per month | Content asks Wallet and Ledger to write the entry; the unique ledger key `reward:{educatorId}:{yyyy-mm}` allows one payment per month |
 
 ## 4. Consistency between the levels
 

@@ -42,3 +42,4 @@ This section maps each Sprint 1 deliverable from the assignment to its GitHub us
 
 - Individual contributions, with links to issues, pull requests, and commits, are listed in [CONTRIBUTIONS.md](../CONTRIBUTIONS.md).
 - Deliverable documents that are added to the repository should be placed in this `docs/` folder and linked in the **Artifact** column through a pull request.
+- 

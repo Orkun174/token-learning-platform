@@ -156,3 +156,4 @@ Each member adds their own Sprint 2 entry below through their own pull request, 
 - Completed the Sprint 2 D2 deliverable and closed the parent issue: [#86](https://github.com/Orkun174/token-learning-platform/issues/86).
 - Created and updated [PR #134](https://github.com/Orkun174/token-learning-platform/pull/134) based on team feedback; the documentation was approved and merged into `develop`.
 - Reviewed [PR #133](https://github.com/Orkun174/token-learning-platform/pull/133), requested clarification of three SRS requirements, verified the corrections, and approved the updated document.
+- Reviewed and approved [PR #137](https://github.com/Orkun174/token-learning-platform/pull/137), verifying the link between the SRS and NFR specification.

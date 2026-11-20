@@ -1,4 +1,4 @@
-﻿# User Flows
+# User Flows
 
 This document outlines the core end-to-end user flows for the **Token Learning Platform**, covering authentication, lesson publishing, escrow-backed booking, lesson completion, and dispute resolution.
 
@@ -8,20 +8,16 @@ This document outlines the core end-to-end user flows for the **Token Learning P
 
 ```mermaid
 flowchart TD
-    A([Start: Landing Page]) --> B{Existing Account?}
-    B -- No --> C[Select Sign Up]
-    C --> D[Enter Email, Password & Profile Info]
-    D --> E[Submit Registration]
-    E --> F[Verify Email / Account]
-    F --> G[System Credits Welcome Token Balance]
-    G --> H([Redirect to Dashboard with Initial Balance])
-
-    B -- Yes --> I[Select Sign In]
-    I --> J[Enter Credentials]
-    J --> K{Valid Credentials?}
-    K -- No --> L[Show Authentication Error]
-    L --> J
-    K -- Yes --> M([Redirect to Dashboard])
+    A([Start: Landing Page]) --> B[Select OAuth Provider: Google or GitHub FR-01]
+    B --> C[Authenticate with Provider & Receive Token]
+    C --> D{Valid Provider Token?}
+    D -- No / Expired --> E[Return 401 INVALID_PROVIDER_TOKEN FR-02]
+    E --> B
+    D -- Yes --> F{First-Time Sign-In?}
+    F -- Yes --> G[Create Account FR-03]
+    G --> H[Grant One-Time Welcome Token Balance FR-06]
+    H --> I([Redirect to Dashboard with Welcome Balance])
+    F -- No --> J([Redirect to Dashboard])
 ```
 
 ---
@@ -31,15 +27,18 @@ flowchart TD
 ```mermaid
 flowchart TD
     A([Educator Dashboard]) --> B[Click 'Create New Lesson']
-    B --> C[Fill Lesson Details: Title, Category, Description]
-    C --> D[Set Token Price & Duration]
-    D --> E[Define Available Time Slots]
-    E --> F{All Required Fields Valid?}
-    F -- No --> G[Highlight Validation Errors]
-    G --> C
-    F -- Yes --> H[Save & Publish Lesson]
-    H --> I[Lesson Status Set to 'Published']
-    I --> J([Lesson Appears in Public Search Catalog])
+    B --> C[Select Subject & Level and Fill Lesson Details]
+    C --> D[Fetch suggestedPrice, minPrice, maxPrice for Subject & Level FR-10]
+    D --> E[Enter Token Price & Define Available Time Slots]
+    E --> F{Price Within +-50% Range?}
+    F -- No --> G[Reject with 400 PRICE_OUT_OF_RANGE FR-12]
+    G --> E
+    F -- Yes --> H{All Required Fields Valid?}
+    H -- No --> I[Highlight Validation Errors]
+    I --> C
+    H -- Yes --> J[Save & Publish Lesson]
+    J --> K[Lesson Status Set to 'Published']
+    K --> L([Lesson Appears in Public Search Catalog])
 ```
 
 ---
@@ -48,64 +47,12 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A([Pupil Dashboard]) --> B[Search / Filter Lessons by Topic, Price, Rating]
+    A([Pupil Dashboard]) --> B[Search / Filter Lessons by Subject, Level, Price, Rating]
     B --> C[Select Lesson & View Details]
     C --> D[Choose Available Time Slot]
     D --> E[Click 'Request Booking']
-    E --> F{Sufficient Token Balance?}
-    F -- No --> G[Show Insufficient Balance Warning]
-    G --> H([Flow Ends / Top-up Prompt])
-    F -- Yes --> I[Lock Tokens in Escrow]
-    I --> J[Booking Created with Status 'Pending']
-    J --> K[Notify Educator of Booking Request]
-    K --> L{Educator Response}
-    L -- Rejects / Expires --> M[Refund Escrowed Tokens to Pupil]
-    M --> N([Booking Status: 'Cancelled'])
-    L -- Accepts --> O[Booking Status: 'Confirmed']
-    O --> P[Tokens Remain Locked in Escrow Until Completion]
-    P --> Q([Notify Pupil & Share Session Details])
-```
-
----
-
-## 4. Lesson Completion and Rating
-
-```mermaid
-flowchart TD
-    A([Confirmed Booking Reaches Scheduled Time]) --> B[Educator & Pupil Conduct Live Session]
-    B --> C[Session Ends]
-    C --> D[Educator Marks Lesson as 'Completed']
-    D --> E{Pupil Confirms Completion or Timeout Reached?}
-    E -- Dispute Raised --> F([Trigger Dispute & Admin Resolution Flow])
-    E -- Confirmed --> G[Release Escrowed Tokens to Educator Wallet]
-    G --> H[Booking Status Updated to 'Completed']
-    H --> I[Prompt Pupil to Rate & Review Lesson]
-    I --> J{Pupil Submits Rating?}
-    J -- Skip --> K([Flow Ends])
-    J -- Submit --> L[Save Rating & Update Educator Average Score]
-    L --> M([Flow Ends])
-```
-
----
-
-## 5. Dispute and Admin Resolution
-
-```mermaid
-flowchart TD
-    A([Pupil Raises Dispute on Lesson]) --> B[Select Reason & Submit Evidence/Notes]
-    B --> C[Booking Status Set to 'Disputed']
-    C --> D[Escrowed Tokens Remain Frozen]
-    D --> E[Notify Admin & Educator]
-    E --> F[Educator Submits Counter-Statement / Evidence]
-    F --> G[Admin Reviews Booking Logs, Messages & Evidence]
-    G --> H{Admin Decision}
-    H -- Rule in Favor of Pupil --> I[Refund Escrowed Tokens to Pupil]
-    I --> J[Booking Status: 'Refunded']
-    H -- Rule in Favor of Educator --> K[Release Escrowed Tokens to Educator]
-    K --> L[Booking Status: 'Resolved - Completed']
-    H -- Partial Split --> M[Split Tokens Between Pupil & Educator]
-    M --> N[Booking Status: 'Resolved - Partial']
-    J --> O([Notify Both Parties of Final Decision])
-    L --> O
-    N --> O
-```
+    E --> F{Booking Rules Check FR-15, FR-16}
+    F -- Own Lesson --> G[Return 403 SELF_BOOKING_NOT_ALLOWED]
+    F -- Slot Taken --> H[Return 409 SLOT_UNAVAILABLE]
+    F -- Low Balance --> I[Return 409 INSUFFICIENT_TOKENS]
+    G --> J

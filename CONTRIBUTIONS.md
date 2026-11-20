@@ -142,3 +142,17 @@ Each member adds their own Sprint 2 entry below through their own pull request, 
 - Reviewed and approved the Sprint 2 deliverables index: https://github.com/Orkun174/token-learning-platform/pull/132#pullrequestreview-5995255881
 - Reviewed and approved the Markdown CI workflow: https://github.com/Orkun174/token-learning-platform/pull/131#pullrequestreview-5995287710
 - Fixed the Markdown spacing of the SRS use cases so the documentation check passes.
+
+  ### Berat Nur Yücesoy (Sprint 2)
+
+- **Role:** QA Engineer
+- **Deliverable owned:** Non-Functional Requirements and Quality-Measure Specification ([#86](https://github.com/Orkun174/token-learning-platform/issues/86))
+- **Commits:** [commits by beratycsy](https://github.com/Orkun174/token-learning-platform/commits/develop?author=beratycsy)
+
+**Completed work:**
+
+- Defined 22 non-functional requirements based on ISO/IEC 25010 quality categories and documented measurable targets and verification methods: [docs/nfr-quality.md](docs/nfr-quality.md).
+- Completed and closed the NFR and quality-measure issues: [#87](https://github.com/Orkun174/token-learning-platform/issues/87) and [#88](https://github.com/Orkun174/token-learning-platform/issues/88).
+- Completed the Sprint 2 D2 deliverable and closed the parent issue: [#86](https://github.com/Orkun174/token-learning-platform/issues/86).
+- Created and updated [PR #134](https://github.com/Orkun174/token-learning-platform/pull/134) based on team feedback; the documentation was approved and merged into `develop`.
+- Reviewed [PR #133](https://github.com/Orkun174/token-learning-platform/pull/133), requested clarification of three SRS requirements, verified the corrections, and approved the updated document.

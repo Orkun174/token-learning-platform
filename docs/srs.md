@@ -233,7 +233,7 @@ Priority follows the backlog order (1 = highest). Each requirement lists its use
 
 ## 5. Non-Functional Requirements
 
-The measurable non-functional requirements and quality measures are specified in the separate NFR document (issue #86, Sprint 2 deliverable 2). They cover performance, security, usability, reliability, maintainability and data protection (KVKK / GDPR).
+The measurable non-functional requirements and quality measures are specified in the separate NFR document [nfr-quality.md](nfr-quality.md) (issue #86, Sprint 2 deliverable 2). It defines 22 requirements (NFR-01 to NFR-22) in the ISO/IEC 25010 quality categories: performance efficiency, security, reliability, usability, maintainability, compatibility and portability. Each requirement has a quality metric, a target and a verification method. Data protection (KVKK / GDPR) is covered by NFR-22. The NFR document and this SRS use the same security assumptions: sign-in only through OAuth, no stored passwords, and token movements only through booking, escrow and ledger entries.
 
 ---
 

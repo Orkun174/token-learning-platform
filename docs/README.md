@@ -15,3 +15,17 @@ This page maps each Sprint 1 deliverable from the assignment to its GitHub user 
 
 - Individual contributions, with links to issues, pull requests, and commits, are listed in [CONTRIBUTIONS.md](../CONTRIBUTIONS.md).
 - Deliverable documents that are added to the repository should be placed in this `docs/` folder and linked in the **Artifact** column through a pull request.
+
+
+## Sprint 2 Deliverables
+
+### Non-Functional Requirements and Quality Measures
+
+| Deliverable | Issue | Sub-issues | Owner (GitHub) | Artifact |
+|---|---|---|---|---|
+| Non-Functional Requirements and Quality-Measure Specification | #86 | #87, #88 | Berat Nur Yücesoy (beratycsy) | [nfr-quality.md](nfr-quality.md) |
+
+This document defines 21 non-functional requirements
+across seven quality categories and specifies their
+proposed quality metrics, acceptance targets, and
+verification methods.

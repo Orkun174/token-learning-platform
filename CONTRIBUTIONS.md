@@ -143,7 +143,7 @@ Each member adds their own Sprint 2 entry below through their own pull request, 
 - Reviewed and approved the Markdown CI workflow: https://github.com/Orkun174/token-learning-platform/pull/131#pullrequestreview-5995287710
 - Fixed the Markdown spacing of the SRS use cases so the documentation check passes.
 
-  ### Berat Nur Yücesoy (Sprint 2)
+### Berat Nur Yücesoy (Sprint 2)
 
 - **Role:** QA Engineer
 - **Deliverable owned:** Non-Functional Requirements and Quality-Measure Specification ([#86](https://github.com/Orkun174/token-learning-platform/issues/86))

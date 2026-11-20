@@ -1,6 +1,6 @@
 # Individual Contributions
 
-Team 6 – Token-Based Peer-to-Peer Learning Platform (SENG 321, Sprint 1)
+Team 6 – Token-Based Peer-to-Peer Learning Platform (SENG 321, Sprint 1 and Sprint 2)
 
 Each member records their own completed work below, with links to the related GitHub records. Every member works under an individual GitHub account, so each entry can be checked against the repository history.
 
@@ -106,3 +106,23 @@ Each member records their own completed work below, with links to the related Gi
 - Owner of the Initial Product Backlog: https://github.com/Orkun174/token-learning-platform/issues/6
 - Recorded the completed backlog items in issues #6, #42, #45, #47, and #48.
 - Added the feature and task layers and the Word document: https://github.com/Orkun174/token-learning-platform/pull/79
+
+---
+
+## Sprint 2 Contributions
+
+Each member adds their own Sprint 2 entry below through their own pull request, with links to the issues and pull requests of their deliverable (see the [deliverables index](docs/README.md)).
+
+### Orkun Aydın Alper (Sprint 2)
+
+- **Role:** DevOps Engineer
+- **Deliverable owned:** Repository, CI and Sprint 2 release ([#104](https://github.com/Orkun174/token-learning-platform/issues/104))
+
+**Completed work:**
+
+- Created the Sprint 2 milestone and the labels for deliverables, story points and priorities: https://github.com/Orkun174/token-learning-platform/issues/105
+- Opened the Sprint 2 deliverable issues and sub-issues (#82–#109) and one issue per product backlog user story with story points and priority (#110–#130).
+- Set up the Sprint 2 project board: https://github.com/users/Orkun174/projects/2
+- Added the Markdown lint and link check workflow: https://github.com/Orkun174/token-learning-platform/pull/131
+- Added the Sprint 2 deliverables index and the Sprint 2 branch naming rule: https://github.com/Orkun174/token-learning-platform/issues/108
+- Kept merged feature branches so the individual commit history stays intact: https://github.com/Orkun174/token-learning-platform/issues/107

@@ -16,7 +16,7 @@ Closes #
 
 ## Checklist
 
-- [ ] The branch was created from `develop` and follows `feature/USXX-short-description`
+- [ ] The branch was created from `develop` and follows `feature/USXX-short-description` (user stories) or `feature/S2-DX-short-description` (Sprint 2 deliverables)
 - [ ] Commit messages follow Conventional Commits and end with `(Closes #X)`
 - [ ] The base branch is `develop` (or `main` only for a release)
 - [ ] CI checks pass

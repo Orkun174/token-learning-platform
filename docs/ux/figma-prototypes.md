@@ -3,6 +3,7 @@
 This document provides the Figma design and interactive prototype links for the **Token Learning Platform**, along with a summary of the linked screens and navigation flows.
 
 ## Links
+
 - **Figma Design & Interactive Prototype:** https://www.figma.com/design/WtbF65PsIM1vaXk9eADdyM/Token-Learning-Platform---Sprint-2-UI?node-id=1-483&t=S9rJ84gubprUV3pZ-1
 
 ## Designed & Linked Screens

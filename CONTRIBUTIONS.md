@@ -171,3 +171,18 @@ Each member adds their own Sprint 2 entry below through their own pull request, 
 - Exported all 9 Figma UI screens as PNGs and documented User Story mappings ([#92](https://github.com/Orkun174/token-learning-platform/issues/92), [PR #141](https://github.com/Orkun174/token-learning-platform/pull/141)).
 - Recorded Sprint 1 retrospective, Sprint 2 planning, and Sprint 2 stand-up notes ([docs/meetings/sprint-1-retrospective.md](docs/meetings/sprint-1-retrospective.md), [docs/meetings/sprint-2-planning.md](docs/meetings/sprint-2-planning.md), [docs/meetings/sprint-2-standups.md](docs/meetings/sprint-2-standups.md), [#102](https://github.com/Orkun174/token-learning-platform/issues/102), [#103](https://github.com/Orkun174/token-learning-platform/issues/103)).
 - Took responsibility for keeping the Sprint 2 GitHub Projects board up to date across `Todo`, `In Progress`, `In Review`, and `Done` columns ([#101](https://github.com/Orkun174/token-learning-platform/issues/101)).
+
+### Arda Eyce (Sprint 2)
+
+- **Role:** Architect
+- **Deliverable owned:** C4 model and UML architecture document ([#93](https://github.com/Orkun174/token-learning-platform/issues/93))
+- **Commits:** [commits by exaltedo2](https://github.com/Orkun174/token-learning-platform/commits/develop?author=exaltedo2)
+
+**Completed work:**
+
+- Aligned the OpenAPI contract with the Sprint 2 requirements (version 0.3.0): profiles, admin dispute resolution with refund, release and no-show, reports, audit logs, free content, booking messages, and rating and level filters in lesson search ([openapi.yaml](openapi.yaml), [#99](https://github.com/Orkun174/token-learning-platform/issues/99), [PR #143](https://github.com/Orkun174/token-learning-platform/pull/143)).
+- Created the C4 System Context, Container and Component diagrams with component responsibilities and interfaces ([docs/architecture/c4-model.md](docs/architecture/c4-model.md), [#94](https://github.com/Orkun174/token-learning-platform/issues/94), [#95](https://github.com/Orkun174/token-learning-platform/issues/95), [PR #144](https://github.com/Orkun174/token-learning-platform/pull/144)).
+- Created the UML class diagram, the PostgreSQL ER schema, the ledger design and the booking state machine ([docs/architecture/data-model.md](docs/architecture/data-model.md), [#96](https://github.com/Orkun174/token-learning-platform/issues/96), [PR #146](https://github.com/Orkun174/token-learning-platform/pull/146)).
+- Created sequence diagrams for sign-in with the welcome grant, booking with escrow, and dispute resolution ([docs/architecture/sequence-diagrams.md](docs/architecture/sequence-diagrams.md), [#97](https://github.com/Orkun174/token-learning-platform/issues/97), [PR #146](https://github.com/Orkun174/token-learning-platform/pull/146)).
+- Created the Docker Compose deployment diagram and nine architecture decisions with trade-offs ([docs/architecture/deployment.md](docs/architecture/deployment.md), [docs/architecture/decisions.md](docs/architecture/decisions.md), [#98](https://github.com/Orkun174/token-learning-platform/issues/98), [PR #146](https://github.com/Orkun174/token-learning-platform/pull/146)).
+- Wrote the architecture overview with PNG exports of all diagrams ([docs/architecture/README.md](docs/architecture/README.md)).

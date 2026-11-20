@@ -1,14 +1,15 @@
-﻿# Sprint 2 Daily Stand-Ups
+﻿# Sprint 2 Stand-Ups
 
-This file logs Sprint 2 stand-up check-ins for **Team 6 – Token-Based Peer-to-Peer Learning Platform**.
+This file logs Sprint 2 stand-up updates for **Team 6 – Token-Based Peer-to-Peer Learning Platform**.
 
-## Stand-Up 1 — November 20, 2026
+## Asynchronous Stand-Up — November 20, 2026 (WhatsApp Coordination)
 
-- **Attendees:** Yusuf Enes Perçi (`@YusufEnes25`), Orkun Aydın Alper (`@Orkun174`), Azat Onur Yücesoy (`@ycesonur`), Alperen Vural (`@alperenvural20056`), Berat Nur Yücesoy (`@beratycsy`), Arda Eyce (`@exaltedo2`)
+- **Channel:** Team WhatsApp Group (Asynchronous Check-In)
+- **Participants:** Yusuf Enes Perçi (`@YusufEnes25`), Orkun Aydın Alper (`@Orkun174`), Azat Onur Yücesoy (`@ycesonur`), Alperen Vural (`@alperenvural20056`), Berat Nur Yücesoy (`@beratycsy`), Arda Eyce (`@exaltedo2`)
 - **Done:**
-  - Merged SRS (`docs/srs.md`, PR `#133`), NFR quality measures (`docs/nfr-quality.md`, PR `#134`), UX user flows (`docs/ux/user-flows.md`, PR `#136`), Figma prototype documentation (`docs/ux/figma-prototypes.md`, PR `#140`), and exported PNG screens (`docs/ux/README.md`, PR `#141`) into `develop`.
-  - Populated the Sprint 2 GitHub Projects board with Sprint 2 deliverable issues and user story issues (`#110`–`#130`).
+  - Set up the Sprint 2 GitHub Projects board and created the Sprint 2 deliverable issues (`#82`–`#109`) and user-story issues (`#110`–`#130`).
+  - Fixed PR base branches to target `develop` instead of `main` and merged D1 (`#133`), D2 (`#134`), and D3 UX deliverables (`#136`, `#140`, `#141`) into `develop`.
 - **Next:**
-  - Complete Sprint 2 meeting records (`docs/meetings/`), update board card statuses (`#101`), and finalize C4/UML architecture models (`#93`).
-  - Complete remaining peer reviews and tag the `sprint-2` release before November 24, 2026.
-- **Blockers:** None.
+  - Finalize Sprint 2 meeting records and `CONTRIBUTIONS.md` updates (`#142`) and keep the GitHub Projects board updated (`#101`).
+  - Complete D4 C4/UML architecture documentation (`#93`) and hold a 15-minute team sync call on **November 23, 2026** for retrospective notes and final release checks.
+- **Blockers:** None (initial PR target branch mismatches with `main` were resolved).

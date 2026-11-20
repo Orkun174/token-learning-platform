@@ -3,13 +3,13 @@
 - **Date:** November 20, 2026
 - **Facilitator:** Yusuf Enes Perçi (`@YusufEnes25`)
 - **Attendees:** Yusuf Enes Perçi (`@YusufEnes25`), Orkun Aydın Alper (`@Orkun174`), Azat Onur Yücesoy (`@ycesonur`), Alperen Vural (`@alperenvural20056`), Berat Nur Yücesoy (`@beratycsy`), Arda Eyce (`@exaltedo2`)
-- **Sprint Goal:** Complete all Sprint 2 requirements, non-functional quality measures, UI/UX user flows and Figma prototypes, C4/UML architecture models, and sprint process records before the November 24, 2026 deadline.
+- **Sprint Goal:** Complete all Sprint 2 requirements, non-functional quality measures, UI/UX user flows and Figma prototypes, C4/UML architecture models, and sprint process records ahead of the November 24, 2026 milestone.
 
 ## Decisions
 
-- **Branching & Review Workflow:** All Sprint 2 work is developed on `feature/` branches branched from `develop` and merged into `develop` after CI passes and at least one team member approves the pull request.
-- **Deliverable & Backlog Tracking:** Sprint 2 deliverables (`D1`–`D6`, issues `#82`–`#109`) and refined user stories (`US-01`–`US-21`, issues `#110`–`#130`) are tracked on the Sprint 2 GitHub Projects board (`Todo`, `In Progress`, `In Review`, `Done`).
-- **Domain Alignment:** External OAuth sign-in (Google/GitHub), subject/level price guidance (±50%), 24-hour automatic lesson completion with a 24-hour dispute window, and binary dispute resolution (full pupil refund or full educator payout) are enforced consistently across SRS, UX, and Architecture.
+- **Board & Issue Setup (November 20, 2026):** Created the Sprint 2 GitHub Projects board (`Todo`, `In Progress`, `In Review`, `Done`) and populated all Sprint 2 deliverable issues (`#82`–`#109`) and refined user-story issues (`#110`–`#130`).
+- **Branching & Review Workflow:** All Sprint 2 work is developed on `feature/` branches created from `develop` and merged into `develop` after CI (`markdownlint` and link-check) passes and at least one team member approves the pull request.
+- **Follow-Up Sync:** Scheduled a 15-minute team call for **November 23, 2026** to review final Sprint 2 status before the `sprint-2` release tag.
 
 ## Action Items & Deliverable Assignments
 

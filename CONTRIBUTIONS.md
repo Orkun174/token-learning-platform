@@ -157,3 +157,17 @@ Each member adds their own Sprint 2 entry below through their own pull request, 
 - Created and updated [PR #134](https://github.com/Orkun174/token-learning-platform/pull/134) based on team feedback; the documentation was approved and merged into `develop`.
 - Reviewed [PR #133](https://github.com/Orkun174/token-learning-platform/pull/133), requested clarification of three SRS requirements, verified the corrections, and approved the updated document.
 - Reviewed and approved [PR #137](https://github.com/Orkun174/token-learning-platform/pull/137), verifying the link between the SRS and NFR specification.
+
+### Yusuf Enes Perçi (Sprint 2)
+
+- **Role:** Scrum Master
+- **Deliverables owned:** Figma UI/UX prototypes and user-flow diagrams ([#89](https://github.com/Orkun174/token-learning-platform/issues/89)), Sprint process: board, meeting records and retrospective ([#100](https://github.com/Orkun174/token-learning-platform/issues/100))
+- **Commits:** [commits by YusufEnes25](https://github.com/Orkun174/token-learning-platform/commits/develop?author=YusufEnes25)
+
+**Completed work:**
+
+- Created end-to-end Mermaid user-flow diagrams aligned with SRS business rules ([docs/ux/user-flows.md](docs/ux/user-flows.md), [#90](https://github.com/Orkun174/token-learning-platform/issues/90), [PR #136](https://github.com/Orkun174/token-learning-platform/pull/136)).
+- Designed and documented the 9-screen Figma UI/UX interactive prototype ([docs/ux/figma-prototypes.md](docs/ux/figma-prototypes.md), [#91](https://github.com/Orkun174/token-learning-platform/issues/91), [PR #140](https://github.com/Orkun174/token-learning-platform/pull/140)).
+- Exported all 9 Figma UI screens as PNGs and documented User Story mappings ([#92](https://github.com/Orkun174/token-learning-platform/issues/92), [PR #141](https://github.com/Orkun174/token-learning-platform/pull/141)).
+- Recorded Sprint 1 retrospective, Sprint 2 planning, and Sprint 2 stand-up notes ([docs/meetings/sprint-1-retrospective.md](docs/meetings/sprint-1-retrospective.md), [docs/meetings/sprint-2-planning.md](docs/meetings/sprint-2-planning.md), [docs/meetings/sprint-2-standups.md](docs/meetings/sprint-2-standups.md), [#102](https://github.com/Orkun174/token-learning-platform/issues/102), [#103](https://github.com/Orkun174/token-learning-platform/issues/103)).
+- Took responsibility for keeping the Sprint 2 GitHub Projects board up to date across `Todo`, `In Progress`, `In Review`, and `Done` columns ([#101](https://github.com/Orkun174/token-learning-platform/issues/101)).

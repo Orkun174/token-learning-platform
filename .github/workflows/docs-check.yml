@@ -1,0 +1,35 @@
+name: Documentation check
+
+on:
+  pull_request:
+    branches: [develop, main]
+  push:
+    branches: [develop, main]
+
+jobs:
+  check-docs:
+    name: Lint Markdown and check links
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Lint Markdown files
+        run: npx --yes markdownlint-cli2@0.17.2 "**/*.md"
+
+      - name: Check relative links in Markdown files
+        # markdown-link-check does not always set a failing exit code,
+        # so the step also fails when the output reports dead links.
+        run: |
+          status=0
+          while IFS= read -r file; do
+            out=$(npx --yes markdown-link-check@3.13.7 -q -c .markdown-link-check.json "$file" 2>&1) || status=1
+            echo "$out"
+            if echo "$out" | grep -q "ERROR:"; then status=1; fi
+          done < <(git ls-files '*.md')
+          exit $status

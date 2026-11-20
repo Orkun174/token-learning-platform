@@ -1,0 +1,15 @@
+// Markdown lint rules for the documentation CI check (issue #106).
+{
+  "config": {
+    "default": true,
+    // Long lines are normal in prose and tables.
+    "MD013": false,
+    // Several blank lines in a row are harmless in our docs.
+    "MD012": false,
+    // Contribution entries list plain URLs on purpose.
+    "MD034": false,
+    // The pull request template does not start with a heading.
+    "MD041": false
+  },
+  "ignores": ["node_modules/**"]
+}

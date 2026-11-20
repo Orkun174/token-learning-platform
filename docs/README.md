@@ -16,7 +16,7 @@
 | D1 | Software Requirements Specification and refined Product Backlog | #82 | #83, #84, #85 | Azat Onur Yücesoy (ycesonur), Alperen Vural (alperenvural20056) | [srs.md](srs.md) ([#133](https://github.com/Orkun174/token-learning-platform/pull/133)), [product-backlog.md](product-backlog.md) |
 <<<<<<< HEAD
 | D2 | Non-functional requirements and quality-measure specification | #86 | #87, #88 | Berat Nur Yücesoy (beratycsy) | `docs/nfr-quality.md` |
-| D3 | Figma UI/UX prototypes and user-flow diagrams | #89 | #90, #91, #92 | Yusuf Enes Perçi (YusufEnes25) | [user-flows.md](ux/user-flows.md) |
+| D3 | Figma UI/UX prototypes and user-flow diagrams | #89 | #90, #91, #92 | Yusuf Enes Perçi (YusufEnes25) | [user-flows.md](./ux/user-flows.md) |
 =======
 | D2 | Non-functional requirements and quality-measure specification | #86 | #87, #88 | Berat Nur Yücesoy (beratycsy) | [nfr-quality.md](nfr-quality.md) ([#134](https://github.com/Orkun174/token-learning-platform/pull/134)) |
 | D3 | Figma UI/UX prototypes and user-flow diagrams | #89 | #90, #91, #92 | Yusuf Enes Perçi (YusufEnes25) | `docs/ux/` |

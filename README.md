@@ -16,7 +16,7 @@ Hiçbir kod veya doküman, bir GitHub Görevi (Issue) olmadan yazılamaz.
 
 1\. GitHub repomuzdaki üst menüden Projects sekmesine girin.
 
-2\. `Sprint 1 - Token Learning Platform` tahtasını açın.
+2\. Güncel sprintin tahtasını açın (şu an: `Sprint 2 - Token Learning Platform`).
 
 3\. Adınıza atanmış görevi bulun ve Todo kolonundan In Progress kolonuna sürükleyin.
 
@@ -45,6 +45,9 @@ git pull origin develop
 3. Kendi göreviniz için yeni bir dal açın (USXX ve kısa ad)
 git checkout -b feature/USXX-kisa-aciklama
 (Örnek doğru dal adı: git checkout -b feature/US03-frontend-auth)
+
+Sprint 2 teslimleri için dal adında teslim kodunu kullanın: `feature/S2-DX-kisa-aciklama`
+(Örnek: git checkout -b feature/S2-D4-c4-diagrams). `USXX` kalıbı product backlog'daki user story'ler (US-01 … US-21) için kullanılır.
 
 
 ADIM 3: ZORUNLU FORMAT (Conventional Commits)

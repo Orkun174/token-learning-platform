@@ -1,6 +1,33 @@
-# Sprint 1 Deliverables Index
+# Deliverables Index
 
-This page maps each Sprint 1 deliverable from the assignment to its GitHub user story, issue, sub-issues, owner, and artifact, so the project documentation and the repository evidence can be matched directly.
+- **Team:** Team 6 – Token-Based Peer-to-Peer Learning Platform (SENG 321)
+- **Repository:** <https://github.com/Orkun174/token-learning-platform>
+- **Individual contributions:** [CONTRIBUTIONS.md](../CONTRIBUTIONS.md)
+
+## Sprint 2 – Requirements and Architecture
+
+- **Milestone:** [Sprint 2](https://github.com/Orkun174/token-learning-platform/milestone/1) (due November 24, 2026)
+- **Board:** [Sprint 2 - Token Learning Platform](https://github.com/users/Orkun174/projects/2)
+- **Release:** `sprint-2` tag (created at the end of the sprint, [#109](https://github.com/Orkun174/token-learning-platform/issues/109))
+- **Product backlog issues:** every user story is a GitHub issue with story points and priority: [user-story issues](https://github.com/Orkun174/token-learning-platform/issues?q=label%3Auser-story) (#110–#130)
+
+| # | Deliverable | Issue | Sub-issues | Owner (GitHub) | Artifact |
+|---|---|---|---|---|---|
+| D1 | Software Requirements Specification and refined Product Backlog | #82 | #83, #84, #85 | Azat Onur Yücesoy (ycesonur), Alperen Vural (alperenvural20056) | [srs.md](srs.md) ([#133](https://github.com/Orkun174/token-learning-platform/pull/133)), [product-backlog.md](product-backlog.md) |
+| D2 | Non-functional requirements and quality-measure specification | #86 | #87, #88 | Berat Nur Yücesoy (beratycsy) | `docs/nfr-quality.md` |
+| D3 | Figma UI/UX prototypes and user-flow diagrams | #89 | #90, #91, #92 | Yusuf Enes Perçi (YusufEnes25) | `docs/ux/` |
+| D4 | C4 model and UML architecture document | #93 | #94, #95, #96, #97, #98, #99 | Arda Eyce (exaltedo2) | `docs/architecture/` |
+| D5 | Sprint process: board, meeting records and retrospective | #100 | #101, #102, #103 | Yusuf Enes Perçi (YusufEnes25) | `docs/meetings/` |
+| D6 | Repository, CI and Sprint 2 release | #104 | #105, #106, #107, #108, #109 | Orkun Aydın Alper (Orkun174) | `.github/workflows/docs-check.yml` ([#131](https://github.com/Orkun174/token-learning-platform/pull/131)), this index |
+
+Artifacts written as `code` are added by their owners during the sprint; each owner replaces the path with a link in the pull request that adds the file.
+
+## Sprint 1 – Project Foundation
+
+- **Release:** [sprint-1](https://github.com/Orkun174/token-learning-platform/releases/tag/sprint-1)
+- **Board:** [Sprint 1 - Token Learning Platform](https://github.com/users/Orkun174/projects/1)
+
+This section maps each Sprint 1 deliverable from the assignment to its GitHub user story, issue, sub-issues, owner, and artifact, so the project documentation and the repository evidence can be matched directly.
 
 | # | Deliverable | User story | Issue | Sub-issues | Owner (GitHub) | Artifact |
 |---|---|---|---|---|---|---|

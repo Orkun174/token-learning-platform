@@ -5,7 +5,7 @@
 **Owner:** Azat Onur Yücesoy (Product Owner)
 **Contributors:** Alperen Vural (Implementation Engineer)
 **GitHub issues:** #82 (S2-D1), #83 (SRS), #84 (traceability matrix)
-**Version:** 0.2 (ready for review)
+**Version:** 0.3 (review comments from the QA engineer applied)
 **Date:** 20 November 2026
 
 ---
@@ -90,12 +90,13 @@ The system is a new, self-contained web application with a server-side API. It d
 | BR-04 | New tokens enter the system only from the platform account (welcome balance, content rewards) |
 | BR-05 | A listing price must be within ±50% of the suggested price |
 | BR-06 | A user cannot book their own lesson |
-| BR-07 | A lesson is completed automatically 24 hours after its end time unless the pupil opens a dispute |
-| BR-08 | A dispute can be opened within 24 hours after the lesson end |
+| BR-07 | A lesson is completed automatically by a scheduled background job after the dispute deadline (24 hours after its end time) has passed, unless the pupil opened a dispute |
+| BR-08 | A dispute can be opened until the dispute deadline (`disputeDeadline`, 24 hours after the lesson end), including the deadline itself |
 | BR-09 | One rating per user per completed lesson, score 1–5 |
 | BR-10 | Content reward: 1 token per 10 unique users who completed at least one lesson, at most 20 tokens per month |
 | BR-11 | A failure of the email or video service never changes a booking status or the ledger |
 | BR-12 | Repeated lessons between the same two users are limited, so tokens cannot be farmed with fake accounts. When the limit is reached, a new booking is rejected |
+| BR-13 | Dispute deadline tie-break: a dispute request that arrives at or before `disputeDeadline` is accepted, and the scheduler may complete the lesson only after `disputeDeadline`. The booking is locked while it is changed, so a dispute and the automatic completion can never both succeed. If both arrive at the same moment, the one that is saved first wins: a saved dispute stops the completion, and a saved completion makes the late dispute fail with 409 `DISPUTE_WINDOW_CLOSED` |
 
 ---
 
@@ -139,9 +140,9 @@ Priority follows the backlog order (1 = highest). Each requirement lists its use
 | FR-15 | The system shall let a pupil request a lesson slot. The `tokenCost` is copied from the listing (BR-01). | US-09 | `POST /bookings` |
 | FR-16 | The system shall reject a booking of the user's own lesson with 403 `SELF_BOOKING_NOT_ALLOWED`, a booking above the repeated-lesson limit with the same educator with 403 `REPEAT_LIMIT_REACHED` (BR-12), a taken slot with 409 `SLOT_UNAVAILABLE` and a low balance with 409 `INSUFFICIENT_TOKENS`. | US-09 | `POST /bookings` |
 | FR-17 | The system shall let an educator confirm a pending booking. The status becomes `CONFIRMED` and an `ESCROW_HOLD` entry moves the pupil's tokens to `heldTokens` in one database transaction. Confirming a booking that is not pending returns 409 `INVALID_STATUS_TRANSITION`. | US-10 | `POST /bookings/{bookingId}/confirm` |
-| FR-18 | The system shall complete a confirmed lesson 24 hours after its end time when there is no dispute. The status becomes `COMPLETED` and an `ESCROW_RELEASE` entry credits the educator exactly once (BR-07). | US-12 | `GET /bookings/{bookingId}` |
+| FR-18 | A scheduled background job (not an API request) shall complete a confirmed lesson once the dispute deadline (24 hours after its end time) has passed and there is no dispute. The status becomes `COMPLETED` and an `ESCROW_RELEASE` entry credits the educator exactly once, even if the job runs twice (BR-07, BR-13). Users only read the result with `GET /bookings/{bookingId}`; this endpoint does not complete anything. | US-12 | Scheduled job (no endpoint); result is read with `GET /bookings/{bookingId}` |
 | FR-19 | The system shall let a participant cancel a booking. When a `CONFIRMED` booking is cancelled, the status becomes `CANCELLED` and an `ESCROW_REFUND` entry returns the held tokens to the pupil. When a `PENDING` booking is cancelled, no tokens are in escrow yet, so only the status becomes `CANCELLED` and no ledger entry is created. Cancelling a booking in any other status (for example `COMPLETED`) returns 409 `INVALID_STATUS_TRANSITION`. | US-11 | `POST /bookings/{bookingId}/cancel` |
-| FR-20 | The system shall let a pupil open a dispute within 24 hours after the lesson end. The status becomes `DISPUTED` and the tokens stay held. After the window it returns 409 `DISPUTE_WINDOW_CLOSED`. A disputed booking is not completed automatically. | US-13 | `POST /bookings/{bookingId}/disputes` |
+| FR-20 | The system shall let a pupil open a dispute until the dispute deadline, 24 hours after the lesson end (BR-08, BR-13). The status becomes `DISPUTED` and the tokens stay held. After the deadline it returns 409 `DISPUTE_WINDOW_CLOSED`. A disputed booking is not completed automatically. | US-13 | `POST /bookings/{bookingId}/disputes` |
 | FR-21 | The system shall let an administrator resolve a dispute by refunding the pupil (`RESOLVED_REFUND`) or paying the educator (`RESOLVED_RELEASE`), using a compensating ledger entry, and shall log the action. When the educator did not attend the lesson (dispute reason `EDUCATOR_ABSENT`), the administrator sets the booking status to `NO_SHOW` and the pupil's held tokens are refunded with a compensating ledger entry. | US-14 | To be added |
 
 ### 3.5 E5 – Sessions and Notifications
@@ -169,7 +170,7 @@ Priority follows the backlog order (1 = highest). Each requirement lists its use
 
 | ID | Requirement | Story | API operation |
 |---|---|---|---|
-| FR-28 | The system shall let the two participants of a booking send and read booking-related text messages. Nobody else can access them. | US-20 | To be added |
+| FR-28 | The system shall let the two participants of a booking send and read booking-related text messages, for example to agree on lesson details. Nobody else can access them. These are simple stored messages attached to one booking, which a user sees when the page is opened or refreshed. This is different from real-time chat, which is out of scope: there is no live delivery, no online or typing status, and no conversation between users who have no booking together. | US-20 | To be added |
 
 ### 3.9 E9 – Administration
 
@@ -248,7 +249,7 @@ Every functional requirement is linked to its user story, the GitHub issue of th
 | FR-15 | US-09 | #116 | E4 / F-07 | `POST /bookings` (`createBooking`) |
 | FR-16 | US-09 | #116 | E4 / F-07 | `POST /bookings` (`createBooking`) |
 | FR-17 | US-10 | #117 | E4 / F-08 | `POST /bookings/{bookingId}/confirm` (`confirmBooking`) |
-| FR-18 | US-12 | #118 | E4 / F-08 | `GET /bookings/{bookingId}` (`getBooking`) |
+| FR-18 | US-12 | #118 | E4 / F-08 | Scheduled job (no endpoint); result is read with `GET /bookings/{bookingId}` (`getBooking`) |
 | FR-19 | US-11 | #119 | E4 / F-08 | `POST /bookings/{bookingId}/cancel` (`cancelBooking`) |
 | FR-20 | US-13 | #120 | E4 / F-09 | `POST /bookings/{bookingId}/disputes` (`openDispute`) |
 | FR-21 | US-14 | #124 | E4 / F-09 | To be added |

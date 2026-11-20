@@ -185,33 +185,44 @@ Priority follows the backlog order (1 = highest). Each requirement lists its use
 ## 4. Use Cases (main flows)
 
 ### UC-01 Sign in and receive the welcome balance
+
 **Actors:** Pupil / Educator, OAuth provider.
+
 1. The user chooses Google or GitHub sign-in.
 2. The system verifies the provider token (FR-01, FR-02).
 3. On first sign-in the system creates the account and grants the welcome balance once (FR-03, FR-06).
 4. The system returns a session.
+
 **Alternative:** invalid or expired token → 401, no account is created.
 
 ### UC-02 Publish a lesson
+
 **Actors:** Educator.
+
 1. The educator asks for a suggested price for subject and level (FR-10).
 2. The educator publishes a listing at a price within ±50% (FR-11).
+
 **Alternative:** price outside the range → 400 `PRICE_OUT_OF_RANGE` (FR-12).
 
 ### UC-03 Find, book and take a lesson (core flow)
+
 **Actors:** Pupil, Educator, System, video API.
+
 1. The pupil searches listings (FR-13, FR-14).
 2. The pupil requests a slot; the cost is taken from the listing (FR-15, FR-16).
 3. The educator confirms; the pupil's tokens are held in escrow (FR-17).
 4. The system creates the meeting link (FR-22) and sends the email (FR-23).
 5. The lesson takes place.
-6. 24 hours after the end, the system completes the booking and pays the educator (FR-18).
+6. After the dispute deadline (24 hours after the end), the scheduler completes the booking and pays the educator (FR-18).
 7. Both sides rate each other (FR-24).
-**Alternatives:** cancellation → refund (FR-19); dispute within 24 hours → tokens stay held (FR-20).
+
+**Alternatives:** cancellation → refund (FR-19); dispute until the dispute deadline → tokens stay held (FR-20).
 
 ### UC-04 Resolve a dispute
+
 **Actors:** Pupil, Administrator.
-1. The pupil opens a dispute within 24 hours after the lesson end, for example because the educator did not attend (FR-20).
+
+1. The pupil opens a dispute until the dispute deadline (24 hours after the lesson end), for example because the educator did not attend (FR-20).
 2. The administrator checks the case and decides (FR-21):
    - the educator did not attend: the administrator sets the booking to `NO_SHOW` and the pupil's held tokens are refunded with a compensating ledger entry;
    - the lesson took place: the tokens are released to the educator;

@@ -126,3 +126,19 @@ Each member adds their own Sprint 2 entry below through their own pull request, 
 - Added the Markdown lint and link check workflow: https://github.com/Orkun174/token-learning-platform/pull/131
 - Added the Sprint 2 deliverables index and the Sprint 2 branch naming rule: https://github.com/Orkun174/token-learning-platform/issues/108
 - Kept merged feature branches so the individual commit history stays intact: https://github.com/Orkun174/token-learning-platform/issues/107
+
+### Azat Onur Yücesoy (Sprint 2)
+
+- **Role:** Product Owner
+- **Deliverable owned:** Software Requirements Specification and refined Product Backlog, shared with Alperen Vural ([#82](https://github.com/Orkun174/token-learning-platform/issues/82))
+- **Commits:** [commits by ycesonur](https://github.com/Orkun174/token-learning-platform/commits/develop?author=ycesonur)
+
+**Completed work:**
+
+- Wrote the Software Requirements Specification (docs/srs.md): business rules, 31 functional requirements, use cases and the requirements traceability matrix that links each requirement to a user story, its issue and the OpenAPI operation: https://github.com/Orkun174/token-learning-platform/pull/133
+- Closed the SRS issues #83 and #84: https://github.com/Orkun174/token-learning-platform/issues/83 and https://github.com/Orkun174/token-learning-platform/issues/84
+- Updated the SRS after the QA review (dispute deadline rule, scheduled lesson completion, booking messages versus real-time chat): https://github.com/Orkun174/token-learning-platform/pull/133
+- Gave the Product Owner screen list and user flows for the Figma prototype: https://github.com/Orkun174/token-learning-platform/issues/89#issuecomment-7041971753
+- Reviewed and approved the Sprint 2 deliverables index: https://github.com/Orkun174/token-learning-platform/pull/132#pullrequestreview-5995255881
+- Reviewed and approved the Markdown CI workflow: https://github.com/Orkun174/token-learning-platform/pull/131#pullrequestreview-5995287710
+- Fixed the Markdown spacing of the SRS use cases so the documentation check passes.

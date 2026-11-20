@@ -13,7 +13,7 @@
 
 | # | Deliverable | Issue | Sub-issues | Owner (GitHub) | Artifact |
 |---|---|---|---|---|---|
-| D1 | Software Requirements Specification and refined Product Backlog | #82 | #83, #84, #85 | Azat Onur Yücesoy (ycesonur), Alperen Vural (alperenvural20056) | `docs/srs.md`, [product-backlog.md](product-backlog.md) |
+| D1 | Software Requirements Specification and refined Product Backlog | #82 | #83, #84, #85 | Azat Onur Yücesoy (ycesonur), Alperen Vural (alperenvural20056) | [srs.md](srs.md) ([#133](https://github.com/Orkun174/token-learning-platform/pull/133)), [product-backlog.md](product-backlog.md) |
 | D2 | Non-functional requirements and quality-measure specification | #86 | #87, #88 | Berat Nur Yücesoy (beratycsy) | `docs/nfr-quality.md` |
 | D3 | Figma UI/UX prototypes and user-flow diagrams | #89 | #90, #91, #92 | Yusuf Enes Perçi (YusufEnes25) | `docs/ux/` |
 | D4 | C4 model and UML architecture document | #93 | #94, #95, #96, #97, #98, #99 | Arda Eyce (exaltedo2) | `docs/architecture/` |

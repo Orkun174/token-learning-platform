@@ -41,7 +41,7 @@ In scope for the first release and out of scope items are defined in Section 4 o
 
 1. [System Vision and Boundary](system-vision.md)
 2. [Product Backlog](product-backlog.md)
-3. [OpenAPI contract](../openapi.yaml) (version 0.2.0)
+3. [OpenAPI contract](../openapi.yaml) (version 0.3.0)
 4. SENG 321 Sprint 2 assignment description
 
 ---
@@ -102,7 +102,7 @@ The system is a new, self-contained web application with a server-side API. It d
 
 ## 3. Functional Requirements
 
-Priority follows the backlog order (1 = highest). Each requirement lists its user story and the OpenAPI operation. "To be added" means the operation will be added to the contract with the story.
+Priority follows the backlog order (1 = highest). Each requirement lists its user story and the OpenAPI operation. "No endpoint" means that the server starts the behavior itself (a scheduled job or a notification), so the API has no operation for it.
 
 ### 3.1 E1 – Identity and Profile
 
@@ -111,8 +111,8 @@ Priority follows the backlog order (1 = highest). Each requirement lists its use
 | FR-01 | The system shall let a user sign in with a Google or GitHub account. A valid provider token returns a session. | US-01 | `POST /auth/login` |
 | FR-02 | The system shall reject an invalid or expired provider token with 401 `INVALID_PROVIDER_TOKEN`. | US-01 | `POST /auth/login` |
 | FR-03 | The system shall create the user account on first sign-in and mark the user as new. | US-01 | `POST /auth/login` |
-| FR-04 | The system shall let a user edit a profile with skills, interests and availability. | US-02 | To be added |
-| FR-05 | The system shall reject an invalid availability range with 400, and shall use skills and availability in lesson search. | US-02 | To be added |
+| FR-04 | The system shall let a user edit a profile with skills, interests and availability. | US-02 | `GET /users/me` (`getMyProfile`), `PATCH /users/me` (`updateMyProfile`) |
+| FR-05 | The system shall reject an invalid availability range with 400, and shall use skills and availability in lesson search. | US-02 | `PATCH /users/me` (`updateMyProfile`), `GET /lessons` (`searchLessons`) |
 
 ### 3.2 E2 – Wallet and Ledger
 
@@ -143,14 +143,14 @@ Priority follows the backlog order (1 = highest). Each requirement lists its use
 | FR-18 | A scheduled background job (not an API request) shall complete a confirmed lesson once the dispute deadline (24 hours after its end time) has passed and there is no dispute. The status becomes `COMPLETED` and an `ESCROW_RELEASE` entry credits the educator exactly once, even if the job runs twice (BR-07, BR-13). Users only read the result with `GET /bookings/{bookingId}`; this endpoint does not complete anything. | US-12 | Scheduled job (no endpoint); result is read with `GET /bookings/{bookingId}` |
 | FR-19 | The system shall let a participant cancel a booking. When a `CONFIRMED` booking is cancelled, the status becomes `CANCELLED` and an `ESCROW_REFUND` entry returns the held tokens to the pupil. When a `PENDING` booking is cancelled, no tokens are in escrow yet, so only the status becomes `CANCELLED` and no ledger entry is created. Cancelling a booking in any other status (for example `COMPLETED`) returns 409 `INVALID_STATUS_TRANSITION`. | US-11 | `POST /bookings/{bookingId}/cancel` |
 | FR-20 | The system shall let a pupil open a dispute until the dispute deadline, 24 hours after the lesson end (BR-08, BR-13). The status becomes `DISPUTED` and the tokens stay held. After the deadline it returns 409 `DISPUTE_WINDOW_CLOSED`. A disputed booking is not completed automatically. | US-13 | `POST /bookings/{bookingId}/disputes` |
-| FR-21 | The system shall let an administrator resolve a dispute by refunding the pupil (`RESOLVED_REFUND`) or paying the educator (`RESOLVED_RELEASE`), using a compensating ledger entry, and shall log the action. When the educator did not attend the lesson (dispute reason `EDUCATOR_ABSENT`), the administrator sets the booking status to `NO_SHOW` and the pupil's held tokens are refunded with a compensating ledger entry. | US-14 | To be added |
+| FR-21 | The system shall let an administrator resolve a dispute by refunding the pupil (`RESOLVED_REFUND`) or paying the educator (`RESOLVED_RELEASE`), using a compensating ledger entry, and shall log the action. When the educator did not attend the lesson (dispute reason `EDUCATOR_ABSENT`), the administrator sets the booking status to `NO_SHOW` and the pupil's held tokens are refunded with a compensating ledger entry. | US-14 | `GET /admin/disputes` (`listDisputes`), `POST /admin/disputes/{disputeId}/resolution` (`resolveDispute`) |
 
 ### 3.5 E5 – Sessions and Notifications
 
 | ID | Requirement | Story | API operation |
 |---|---|---|---|
 | FR-22 | The system shall create a meeting link through the video API (or the documented stub) after a booking is confirmed and show it only to the two participants. | US-15 | `GET /bookings/{bookingId}` |
-| FR-23 | The system shall send an email when a booking is confirmed and a reminder before the lesson starts. A failed email shall not change the booking status (BR-11). | US-16 | To be added |
+| FR-23 | The system shall send an email when a booking is confirmed and a reminder before the lesson starts. A failed email shall not change the booking status (BR-11). | US-16 | No endpoint: the server sends the emails after `confirmBooking` and before the lesson starts |
 
 ### 3.6 E6 – Ratings
 
@@ -163,22 +163,22 @@ Priority follows the backlog order (1 = highest). Each requirement lists its use
 
 | ID | Requirement | Story | API operation |
 |---|---|---|---|
-| FR-26 | The system shall let an educator publish free short lessons and documents on the profile. Unsupported file types shall be rejected. | US-18 | To be added |
-| FR-27 | The system shall reward an educator with 1 token per 10 unique users (who completed at least one lesson), at most 20 tokens per month, as a `CONTENT_REWARD` ledger entry (BR-10). | US-19 | To be added |
+| FR-26 | The system shall let an educator publish free short lessons and documents on the profile. Unsupported file types shall be rejected. | US-18 | `POST /contents` (`publishContent`), `GET /users/{userId}/contents` (`listUserContents`), `GET /contents/{contentId}` (`getContent`) |
+| FR-27 | The system shall reward an educator with 1 token per 10 unique users (who completed at least one lesson), at most 20 tokens per month, as a `CONTENT_REWARD` ledger entry (BR-10). | US-19 | No endpoint: monthly scheduled job; the `CONTENT_REWARD` entry is read with `GET /wallet/transactions` |
 
 ### 3.8 E8 – Messaging
 
 | ID | Requirement | Story | API operation |
 |---|---|---|---|
-| FR-28 | The system shall let the two participants of a booking send and read booking-related text messages, for example to agree on lesson details. Nobody else can access them. These are simple stored messages attached to one booking, which a user sees when the page is opened or refreshed. This is different from real-time chat, which is out of scope: there is no live delivery, no online or typing status, and no conversation between users who have no booking together. | US-20 | To be added |
+| FR-28 | The system shall let the two participants of a booking send and read booking-related text messages, for example to agree on lesson details. Nobody else can access them. These are simple stored messages attached to one booking, which a user sees when the page is opened or refreshed. This is different from real-time chat, which is out of scope: there is no live delivery, no online or typing status, and no conversation between users who have no booking together. | US-20 | `GET /bookings/{bookingId}/messages` (`listBookingMessages`), `POST /bookings/{bookingId}/messages` (`sendBookingMessage`) |
 
 ### 3.9 E9 – Administration
 
 | ID | Requirement | Story | API operation |
 |---|---|---|---|
-| FR-29 | The system shall give administrators an audit log that lists every ledger movement and administrator action. Other users shall not have access. | US-21 | To be added |
-| FR-30 | The system shall give administrators a view of the reports created under FR-31, with a role check. | US-21 | To be added |
-| FR-31 | The system shall let a signed-in user report inappropriate content or behavior (for example a content item, a message or a user) with a reason. Each report is stored and becomes visible to administrators (FR-30). | US-21 | To be added |
+| FR-29 | The system shall give administrators an audit log that lists every ledger movement and administrator action. Other users shall not have access. | US-21 | `GET /admin/audit-logs` (`listAuditLogs`) |
+| FR-30 | The system shall give administrators a view of the reports created under FR-31, with a role check. | US-21 | `GET /admin/reports` (`listReports`) |
+| FR-31 | The system shall let a signed-in user report inappropriate content or behavior (for example a content item, a message or a user) with a reason. Each report is stored and becomes visible to administrators (FR-30). | US-21 | `POST /reports` (`createReport`) |
 
 ---
 
@@ -246,8 +246,8 @@ Every functional requirement is linked to its user story, the GitHub issue of th
 | FR-01 | US-01 | #110 | E1 / F-01 | `POST /auth/login` (`loginUser`) |
 | FR-02 | US-01 | #110 | E1 / F-01 | `POST /auth/login` (`loginUser`) |
 | FR-03 | US-01 | #110 | E1 / F-01 | `POST /auth/login` (`loginUser`) |
-| FR-04 | US-02 | #126 | E1 / F-02 | To be added |
-| FR-05 | US-02 | #126 | E1 / F-02 | To be added |
+| FR-04 | US-02 | #126 | E1 / F-02 | `GET /users/me` (`getMyProfile`), `PATCH /users/me` (`updateMyProfile`) |
+| FR-05 | US-02 | #126 | E1 / F-02 | `PATCH /users/me` (`updateMyProfile`), `GET /lessons` (`searchLessons`) |
 | FR-06 | US-03 | #112 | E2 / F-03 | `POST /auth/login`, `GET /wallet/transactions` |
 | FR-07 | US-04 | #111 | E2 / F-04 | `GET /wallet/balance` (`getWalletBalance`) |
 | FR-08 | US-04 | #111 | E2 / F-04 | `GET /wallet/balance` (`getWalletBalance`) |
@@ -263,16 +263,16 @@ Every functional requirement is linked to its user story, the GitHub issue of th
 | FR-18 | US-12 | #118 | E4 / F-08 | Scheduled job (no endpoint); result is read with `GET /bookings/{bookingId}` (`getBooking`) |
 | FR-19 | US-11 | #119 | E4 / F-08 | `POST /bookings/{bookingId}/cancel` (`cancelBooking`) |
 | FR-20 | US-13 | #120 | E4 / F-09 | `POST /bookings/{bookingId}/disputes` (`openDispute`) |
-| FR-21 | US-14 | #124 | E4 / F-09 | To be added |
+| FR-21 | US-14 | #124 | E4 / F-09 | `GET /admin/disputes` (`listDisputes`), `POST /admin/disputes/{disputeId}/resolution` (`resolveDispute`) |
 | FR-22 | US-15 | #121 | E5 / F-10 | `GET /bookings/{bookingId}` (`getBooking`) |
-| FR-23 | US-16 | #125 | E5 / F-11 | To be added |
+| FR-23 | US-16 | #125 | E5 / F-11 | No endpoint: the server sends the emails after `confirmBooking` and before the lesson starts |
 | FR-24 | US-17 | #122 | E6 / F-12 | `POST /bookings/{bookingId}/ratings` (`rateBooking`) |
 | FR-25 | US-17 | #122 | E6 / F-12 | `POST /bookings/{bookingId}/ratings` (`rateBooking`) |
-| FR-26 | US-18 | #127 | E7 / F-13 | To be added |
-| FR-27 | US-19 | #128 | E7 / F-14 | To be added |
-| FR-28 | US-20 | #129 | E8 / F-15 | To be added |
-| FR-29 | US-21 | #130 | E9 / F-16 | To be added |
-| FR-30 | US-21 | #130 | E9 / F-16 | To be added |
-| FR-31 | US-21 | #130 | E9 / F-16 | To be added |
+| FR-26 | US-18 | #127 | E7 / F-13 | `POST /contents` (`publishContent`), `GET /users/{userId}/contents` (`listUserContents`), `GET /contents/{contentId}` (`getContent`) |
+| FR-27 | US-19 | #128 | E7 / F-14 | No endpoint: monthly scheduled job; the `CONTENT_REWARD` entry is read with `GET /wallet/transactions` |
+| FR-28 | US-20 | #129 | E8 / F-15 | `GET /bookings/{bookingId}/messages` (`listBookingMessages`), `POST /bookings/{bookingId}/messages` (`sendBookingMessage`) |
+| FR-29 | US-21 | #130 | E9 / F-16 | `GET /admin/audit-logs` (`listAuditLogs`) |
+| FR-30 | US-21 | #130 | E9 / F-16 | `GET /admin/reports` (`listReports`) |
+| FR-31 | US-21 | #130 | E9 / F-16 | `POST /reports` (`createReport`) |
 
-**Coverage check:** all 21 user stories (US-01 … US-21) are covered by at least one FR. 7 of the 21 stories (US-02, US-14, US-16, US-18, US-19, US-20, US-21) still have no OpenAPI operation. The Architect adds them in issue #99 "Align openapi.yaml with the architecture".
+**Coverage check:** all 21 user stories (US-01 … US-21) are covered by at least one FR, and every FR is linked to an OpenAPI operation or to a server-side behavior without an endpoint (FR-18, FR-23, FR-27: scheduled jobs and notifications). The operations were added to the contract in version 0.3.0 (issue #99).

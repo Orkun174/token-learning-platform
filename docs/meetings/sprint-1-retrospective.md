@@ -2,7 +2,7 @@
 
 - **Date:** November 20, 2026 (initial notes; to be finalized in the November 23, 2026 team call)
 - **Facilitator:** Yusuf Enes Perçi (`@YusufEnes25`)
-- **Attendees:** Yusuf Enes Perçi (`@YusufEnes25`), Orkun Aydın Alper (`@Orkun174`), Azat Onur Yücesoy (`@ycesonur`), Alperen Vural (`@alperenvural20056`), Berat Nur Yücesoy (`@beratycsy`), Arda Eyce (`@exaltedo2`)
+- **Attendees:** Yusuf Enes Perçi (`@YusufEnes25`), Orkun Aydın Alper (`@Orkun174`), Azat Onur Yücesoy (`@ycesonur`), Alperen Vural (`@alprnvral04`), Berat Nur Yücesoy (`@beratycsy`), Arda Eyce (`@exaltedo2`)
 
 ## Initial Observations (November 20, 2026)
 

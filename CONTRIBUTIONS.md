@@ -96,10 +96,10 @@ Each member records their own completed work below, with links to the related Gi
 ## Alperen Vural
 
 - **Student number:** 230204046
-- **GitHub:** [alperenvural20056](https://github.com/alperenvural20056)
+- **GitHub:** [alprnvral04](https://github.com/alprnvral04)
 - **Role:** Implementation Engineer. Breaks features into user stories and tasks, estimates effort, and writes the core application code in later sprints.
 - **Deliverable owned:** Initial Product Backlog ([#6](https://github.com/Orkun174/token-learning-platform/issues/6))
-- **Commits:** [commits by alperenvural20056](https://github.com/Orkun174/token-learning-platform/commits/main?author=alperenvural20056)
+- **Commits:** [commits by alprnvral04](https://github.com/Orkun174/token-learning-platform/commits/main?author=alprnvral04)
 
 **Completed work:**
 

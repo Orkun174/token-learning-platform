@@ -13,7 +13,7 @@
 
 | # | Deliverable | Issue | Sub-issues | Owner (GitHub) | Artifact |
 |---|---|---|---|---|---|
-| D1 | Software Requirements Specification and refined Product Backlog | #82 | #83, #84, #85 | Azat Onur Yücesoy (ycesonur), Alperen Vural (alperenvural20056) | [srs.md](srs.md) ([#133](https://github.com/Orkun174/token-learning-platform/pull/133)), [product-backlog.md](product-backlog.md) |
+| D1 | Software Requirements Specification and refined Product Backlog | #82 | #83, #84, #85 | Azat Onur Yücesoy (ycesonur), Alperen Vural (alprnvral04) | [srs.md](srs.md) ([#133](https://github.com/Orkun174/token-learning-platform/pull/133)), [product-backlog.md](product-backlog.md) |
 | D2 | Non-functional requirements and quality-measure specification | #86 | #87, #88 | Berat Nur Yücesoy (beratycsy) | [nfr-quality.md](nfr-quality.md) ([#134](https://github.com/Orkun174/token-learning-platform/pull/134)) |
 | D3 | Figma UI/UX prototypes and user-flow diagrams | #89 | #90, #91, #92 | Yusuf Enes Perçi (YusufEnes25) | [user-flows.md](ux/user-flows.md), [figma-prototypes.md](ux/figma-prototypes.md) , [ux/README.md](ux/README.md) |
 | D4 | C4 model and UML architecture document | #93 | #94, #95, #96, #97, #98, #99 | Arda Eyce (exaltedo2) | [architecture/README.md](architecture/README.md), [c4-model.md](architecture/c4-model.md), [data-model.md](architecture/data-model.md), [sequence-diagrams.md](architecture/sequence-diagrams.md), [deployment.md](architecture/deployment.md), [decisions.md](architecture/decisions.md), [openapi.yaml](../openapi.yaml) ([#143](https://github.com/Orkun174/token-learning-platform/pull/143), [#144](https://github.com/Orkun174/token-learning-platform/pull/144), [#146](https://github.com/Orkun174/token-learning-platform/pull/146)) |
@@ -36,7 +36,7 @@ This section maps each Sprint 1 deliverable from the assignment to its GitHub us
 | 3 | OpenAPI Draft | US03 | #5 | #30, #31, #32, #34, #36 | Berat Nur Yücesoy (beratycsy) | [openapi.yaml](../openapi.yaml) |
 | 4 | Team Roles and RACI Matrix | US04 | #4 | #27, #28, #29 | Yusuf Enes Perçi (YusufEnes25) | [team-roles-raci.docx](team-roles-raci.docx) |
 | 5 | GitHub Repository and Git-Flow Workflow | US05 | #2 | #49, #50, #51, #52, #53 | Orkun Aydın Alper (Orkun174) | [README.md](../README.md) (developer workflow) |
-| 6 | Initial Product Backlog | US06 | #6 | #42, #45, #47, #48 | Alperen Vural (alperenvural20056) | [product-backlog.md](product-backlog.md), [product-backlog.docx](product-backlog.docx) |
+| 6 | Initial Product Backlog | US06 | #6 | #42, #45, #47, #48 | Alperen Vural (alprnvral04) | [product-backlog.md](product-backlog.md), [product-backlog.docx](product-backlog.docx) |
 
 ## Notes
 

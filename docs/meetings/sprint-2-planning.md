@@ -2,7 +2,7 @@
 
 - **Date:** November 20, 2026
 - **Facilitator:** Yusuf Enes Perçi (`@YusufEnes25`)
-- **Attendees:** Yusuf Enes Perçi (`@YusufEnes25`), Orkun Aydın Alper (`@Orkun174`), Azat Onur Yücesoy (`@ycesonur`), Alperen Vural (`@alperenvural20056`), Berat Nur Yücesoy (`@beratycsy`), Arda Eyce (`@exaltedo2`)
+- **Attendees:** Yusuf Enes Perçi (`@YusufEnes25`), Orkun Aydın Alper (`@Orkun174`), Azat Onur Yücesoy (`@ycesonur`), Alperen Vural (`@alprnvral04`), Berat Nur Yücesoy (`@beratycsy`), Arda Eyce (`@exaltedo2`)
 - **Sprint Goal:** Complete all Sprint 2 requirements, non-functional quality measures, UI/UX user flows and Figma prototypes, C4/UML architecture models, and sprint process records ahead of the November 24, 2026 milestone.
 
 ## Decisions
@@ -15,7 +15,7 @@
 
 | Deliverable | Issue(s) | Owner | Due Date |
 |---|---|---|---|
-| D1: Software Requirements Specification & Refined Product Backlog (`docs/srs.md`, `docs/product-backlog.md`) | #82 (#83, #84, #85) | Azat Onur Yücesoy (`@ycesonur`), Alperen Vural (`@alperenvural20056`) | November 24, 2026 |
+| D1: Software Requirements Specification & Refined Product Backlog (`docs/srs.md`, `docs/product-backlog.md`) | #82 (#83, #84, #85) | Azat Onur Yücesoy (`@ycesonur`), Alperen Vural (`@alprnvral04`) | November 24, 2026 |
 | D2: Non-Functional Requirements & Quality Measures (`docs/nfr-quality.md`) | #86 (#87, #88) | Berat Nur Yücesoy (`@beratycsy`) | November 24, 2026 |
 | D3: Figma UI/UX Prototypes & User-Flow Diagrams (`docs/ux/`) | #89 (#90, #91, #92) | Yusuf Enes Perçi (`@YusufEnes25`) | November 24, 2026 |
 | D4: C4 Model & UML Architecture Document (`docs/architecture/`) | #93 (#94–#99) | Arda Eyce (`@exaltedo2`) | November 24, 2026 |

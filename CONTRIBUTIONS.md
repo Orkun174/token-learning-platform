@@ -186,3 +186,15 @@ Each member adds their own Sprint 2 entry below through their own pull request, 
 - Created sequence diagrams for sign-in with the welcome grant, booking with escrow, and dispute resolution ([docs/architecture/sequence-diagrams.md](docs/architecture/sequence-diagrams.md), [#97](https://github.com/Orkun174/token-learning-platform/issues/97), [PR #146](https://github.com/Orkun174/token-learning-platform/pull/146)).
 - Created the Docker Compose deployment diagram and nine architecture decisions with trade-offs ([docs/architecture/deployment.md](docs/architecture/deployment.md), [docs/architecture/decisions.md](docs/architecture/decisions.md), [#98](https://github.com/Orkun174/token-learning-platform/issues/98), [PR #146](https://github.com/Orkun174/token-learning-platform/pull/146)).
 - Wrote the architecture overview with PNG exports of all diagrams ([docs/architecture/README.md](docs/architecture/README.md)).
+
+
+### Alperen Vural (Sprint 2)
+
+- **Role:** Implementation Engineer
+- **Deliverable owned:** Refined Product Backlog, part of the shared SRS and backlog deliverable ([#82](https://github.com/Orkun174/token-learning-platform/issues/82)).
+
+**Completed work:**
+
+- Refined the [product backlog](docs/product-backlog.md) and linked all 21 user stories to their GitHub issues and 31 SRS functional requirements ([#85](https://github.com/Orkun174/token-learning-platform/issues/85), [PR #147](https://github.com/Orkun174/token-learning-platform/pull/147)).
+- Documented MoSCoW priorities and the nine-story, 43-point Sprint 3 MVP. Verified the 91-point total, dependency order and all 44 existing tasks.
+- Updated acceptance criteria for booking, escrow, disputes, ratings and reporting and aligned operation references with the SRS and OpenAPI 0.3.0.

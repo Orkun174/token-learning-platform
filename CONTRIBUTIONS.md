@@ -1,6 +1,6 @@
 # Individual Contributions
 
-Team 6 – Token-Based Peer-to-Peer Learning Platform (SENG 321, Sprint 1)
+Team 6 – Token-Based Peer-to-Peer Learning Platform (SENG 321, Sprint 1 and Sprint 2)
 
 Each member records their own completed work below, with links to the related GitHub records. Every member works under an individual GitHub account, so each entry can be checked against the repository history.
 
@@ -96,13 +96,111 @@ Each member records their own completed work below, with links to the related Gi
 ## Alperen Vural
 
 - **Student number:** 230204046
-- **GitHub:** [alperenvural20056](https://github.com/alperenvural20056)
+- **GitHub:** [alprnvral04](https://github.com/alprnvral04)
 - **Role:** Implementation Engineer. Breaks features into user stories and tasks, estimates effort, and writes the core application code in later sprints.
 - **Deliverable owned:** Initial Product Backlog ([#6](https://github.com/Orkun174/token-learning-platform/issues/6))
-- **Commits:** [commits by alperenvural20056](https://github.com/Orkun174/token-learning-platform/commits/main?author=alperenvural20056)
+- **Commits:** [commits by alprnvral04](https://github.com/Orkun174/token-learning-platform/commits/main?author=alprnvral04)
 
 **Completed work:**
 
 - Owner of the Initial Product Backlog: https://github.com/Orkun174/token-learning-platform/issues/6
 - Recorded the completed backlog items in issues #6, #42, #45, #47, and #48.
 - Added the feature and task layers and the Word document: https://github.com/Orkun174/token-learning-platform/pull/79
+
+---
+
+## Sprint 2 Contributions
+
+Each member adds their own Sprint 2 entry below through their own pull request, with links to the issues and pull requests of their deliverable (see the [deliverables index](docs/README.md)).
+
+### Orkun Aydın Alper (Sprint 2)
+
+- **Role:** DevOps Engineer
+- **Deliverable owned:** Repository, CI and Sprint 2 release ([#104](https://github.com/Orkun174/token-learning-platform/issues/104))
+- **Commits:** [commits by Orkun174](https://github.com/Orkun174/token-learning-platform/commits/develop?author=Orkun174)
+
+**Completed work:**
+
+- Created the Sprint 2 milestone and the labels for deliverables, story points and priorities: https://github.com/Orkun174/token-learning-platform/issues/105
+- Opened the Sprint 2 deliverable issues and sub-issues (#82–#109) and one issue per product backlog user story with story points and priority (#110–#130).
+- Set up the Sprint 2 project board: https://github.com/users/Orkun174/projects/2
+- Added the Markdown lint and link check workflow: https://github.com/Orkun174/token-learning-platform/pull/131
+- Added the Sprint 2 deliverables index and the Sprint 2 branch naming rule: https://github.com/Orkun174/token-learning-platform/issues/108
+- Kept merged feature branches so the individual commit history stays intact: https://github.com/Orkun174/token-learning-platform/issues/107
+- Reviewed the Sprint 2 pull requests against the SRS, OpenAPI and repository conventions, requested changes where needed and approved them after the fixes: [#134](https://github.com/Orkun174/token-learning-platform/pull/134), [#136](https://github.com/Orkun174/token-learning-platform/pull/136), [#140](https://github.com/Orkun174/token-learning-platform/pull/140), [#144](https://github.com/Orkun174/token-learning-platform/pull/144) (changes requested, then approved) and [#135](https://github.com/Orkun174/token-learning-platform/pull/135), [#139](https://github.com/Orkun174/token-learning-platform/pull/139), [#141](https://github.com/Orkun174/token-learning-platform/pull/141), [#142](https://github.com/Orkun174/token-learning-platform/pull/142), [#145](https://github.com/Orkun174/token-learning-platform/pull/145), [#146](https://github.com/Orkun174/token-learning-platform/pull/146), [#148](https://github.com/Orkun174/token-learning-platform/pull/148), [#150](https://github.com/Orkun174/token-learning-platform/pull/150) (approved).
+- Merged the reviewed pull requests into `develop` after CI passed. Merged [#144](https://github.com/Orkun174/token-learning-platform/pull/144) with a merge commit before the stacked [#146](https://github.com/Orkun174/token-learning-platform/pull/146) so the two architecture PRs did not conflict.
+- Fixed the links broken by a teammate's GitHub username change: [#149](https://github.com/Orkun174/token-learning-platform/pull/149)
+- Closed the issues completed on `develop` by hand, because closing keywords only work on merges into `main`, and kept the board cards in the right columns.
+- Created the Sprint 2 release from `develop` to `main` with the `sprint-2` tag ([#109](https://github.com/Orkun174/token-learning-platform/issues/109)): https://github.com/Orkun174/token-learning-platform/releases/tag/sprint-2
+
+### Azat Onur Yücesoy (Sprint 2)
+
+- **Role:** Product Owner
+- **Deliverable owned:** Software Requirements Specification and refined Product Backlog, shared with Alperen Vural ([#82](https://github.com/Orkun174/token-learning-platform/issues/82))
+- **Commits:** [commits by ycesonur](https://github.com/Orkun174/token-learning-platform/commits/develop?author=ycesonur)
+
+**Completed work:**
+
+- Wrote the Software Requirements Specification (docs/srs.md): business rules, 31 functional requirements, use cases and the requirements traceability matrix that links each requirement to a user story, its issue and the OpenAPI operation: https://github.com/Orkun174/token-learning-platform/pull/133
+- Closed the SRS issues #83 and #84: https://github.com/Orkun174/token-learning-platform/issues/83 and https://github.com/Orkun174/token-learning-platform/issues/84
+- Updated the SRS after the QA review (dispute deadline rule, scheduled lesson completion, booking messages versus real-time chat): https://github.com/Orkun174/token-learning-platform/pull/133
+- Gave the Product Owner screen list and user flows for the Figma prototype: https://github.com/Orkun174/token-learning-platform/issues/89#issuecomment-7041971753
+- Reviewed and approved the Sprint 2 deliverables index: https://github.com/Orkun174/token-learning-platform/pull/132#pullrequestreview-5995255881
+- Reviewed and approved the Markdown CI workflow: https://github.com/Orkun174/token-learning-platform/pull/131#pullrequestreview-5995287710
+- Fixed the Markdown spacing of the SRS use cases so the documentation check passes.
+
+### Berat Nur Yücesoy (Sprint 2)
+
+- **Role:** QA Engineer
+- **Deliverable owned:** Non-Functional Requirements and Quality-Measure Specification ([#86](https://github.com/Orkun174/token-learning-platform/issues/86))
+- **Commits:** [commits by beratycsy](https://github.com/Orkun174/token-learning-platform/commits/develop?author=beratycsy)
+
+**Completed work:**
+
+- Defined 22 non-functional requirements based on ISO/IEC 25010 quality categories and documented measurable targets and verification methods: [docs/nfr-quality.md](docs/nfr-quality.md).
+- Completed and closed the NFR and quality-measure issues: [#87](https://github.com/Orkun174/token-learning-platform/issues/87) and [#88](https://github.com/Orkun174/token-learning-platform/issues/88).
+- Completed the Sprint 2 D2 deliverable and closed the parent issue: [#86](https://github.com/Orkun174/token-learning-platform/issues/86).
+- Created and updated [PR #134](https://github.com/Orkun174/token-learning-platform/pull/134) based on team feedback; the documentation was approved and merged into `develop`.
+- Reviewed [PR #133](https://github.com/Orkun174/token-learning-platform/pull/133), requested clarification of three SRS requirements, verified the corrections, and approved the updated document.
+- Reviewed and approved [PR #137](https://github.com/Orkun174/token-learning-platform/pull/137), verifying the link between the SRS and NFR specification.
+
+### Yusuf Enes Perçi (Sprint 2)
+
+- **Role:** Scrum Master
+- **Deliverables owned:** Figma UI/UX prototypes and user-flow diagrams ([#89](https://github.com/Orkun174/token-learning-platform/issues/89)), Sprint process: board, meeting records and retrospective ([#100](https://github.com/Orkun174/token-learning-platform/issues/100))
+- **Commits:** [commits by YusufEnes25](https://github.com/Orkun174/token-learning-platform/commits/develop?author=YusufEnes25)
+
+**Completed work:**
+
+- Created end-to-end Mermaid user-flow diagrams aligned with SRS business rules ([docs/ux/user-flows.md](docs/ux/user-flows.md), [#90](https://github.com/Orkun174/token-learning-platform/issues/90), [PR #136](https://github.com/Orkun174/token-learning-platform/pull/136)).
+- Designed and documented the 9-screen Figma UI/UX interactive prototype ([docs/ux/figma-prototypes.md](docs/ux/figma-prototypes.md), [#91](https://github.com/Orkun174/token-learning-platform/issues/91), [PR #140](https://github.com/Orkun174/token-learning-platform/pull/140)).
+- Exported all 9 Figma UI screens as PNGs and documented User Story mappings ([#92](https://github.com/Orkun174/token-learning-platform/issues/92), [PR #141](https://github.com/Orkun174/token-learning-platform/pull/141)).
+- Recorded Sprint 1 retrospective, Sprint 2 planning, and Sprint 2 stand-up notes ([docs/meetings/sprint-1-retrospective.md](docs/meetings/sprint-1-retrospective.md), [docs/meetings/sprint-2-planning.md](docs/meetings/sprint-2-planning.md), [docs/meetings/sprint-2-standups.md](docs/meetings/sprint-2-standups.md), [#102](https://github.com/Orkun174/token-learning-platform/issues/102), [#103](https://github.com/Orkun174/token-learning-platform/issues/103)).
+- Took responsibility for keeping the Sprint 2 GitHub Projects board up to date across `Todo`, `In Progress`, `In Review`, and `Done` columns ([#101](https://github.com/Orkun174/token-learning-platform/issues/101)).
+
+### Arda Eyce (Sprint 2)
+
+- **Role:** Architect
+- **Deliverable owned:** C4 model and UML architecture document ([#93](https://github.com/Orkun174/token-learning-platform/issues/93))
+- **Commits:** [commits by exaltedo2](https://github.com/Orkun174/token-learning-platform/commits/develop?author=exaltedo2)
+
+**Completed work:**
+
+- Aligned the OpenAPI contract with the Sprint 2 requirements (version 0.3.0): profiles, admin dispute resolution with refund, release and no-show, reports, audit logs, free content, booking messages, and rating and level filters in lesson search ([openapi.yaml](openapi.yaml), [#99](https://github.com/Orkun174/token-learning-platform/issues/99), [PR #143](https://github.com/Orkun174/token-learning-platform/pull/143)).
+- Created the C4 System Context, Container and Component diagrams with component responsibilities and interfaces ([docs/architecture/c4-model.md](docs/architecture/c4-model.md), [#94](https://github.com/Orkun174/token-learning-platform/issues/94), [#95](https://github.com/Orkun174/token-learning-platform/issues/95), [PR #144](https://github.com/Orkun174/token-learning-platform/pull/144)).
+- Created the UML class diagram, the PostgreSQL ER schema, the ledger design and the booking state machine ([docs/architecture/data-model.md](docs/architecture/data-model.md), [#96](https://github.com/Orkun174/token-learning-platform/issues/96), [PR #146](https://github.com/Orkun174/token-learning-platform/pull/146)).
+- Created sequence diagrams for sign-in with the welcome grant, booking with escrow, and dispute resolution ([docs/architecture/sequence-diagrams.md](docs/architecture/sequence-diagrams.md), [#97](https://github.com/Orkun174/token-learning-platform/issues/97), [PR #146](https://github.com/Orkun174/token-learning-platform/pull/146)).
+- Created the Docker Compose deployment diagram and nine architecture decisions with trade-offs ([docs/architecture/deployment.md](docs/architecture/deployment.md), [docs/architecture/decisions.md](docs/architecture/decisions.md), [#98](https://github.com/Orkun174/token-learning-platform/issues/98), [PR #146](https://github.com/Orkun174/token-learning-platform/pull/146)).
+- Wrote the architecture overview with PNG exports of all diagrams ([docs/architecture/README.md](docs/architecture/README.md)).
+
+
+### Alperen Vural (Sprint 2)
+
+- **Role:** Implementation Engineer
+- **Deliverable owned:** Refined Product Backlog, part of the shared SRS and backlog deliverable ([#82](https://github.com/Orkun174/token-learning-platform/issues/82)).
+
+**Completed work:**
+
+- Refined the [product backlog](docs/product-backlog.md) and linked all 21 user stories to their GitHub issues and 31 SRS functional requirements ([#85](https://github.com/Orkun174/token-learning-platform/issues/85), [PR #147](https://github.com/Orkun174/token-learning-platform/pull/147)).
+- Documented MoSCoW priorities and the nine-story, 43-point Sprint 3 MVP. Verified the 91-point total, dependency order and all 44 existing tasks.
+- Updated acceptance criteria for booking, escrow, disputes, ratings and reporting and aligned operation references with the SRS and OpenAPI 0.3.0.

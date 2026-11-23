@@ -1,8 +1,8 @@
-# Deliverable 6: Initial Product Backlog
+# Sprint 2 — Refined Product Backlog
 
 **Project:** Token-Based Peer-to-Peer Learning Platform
 **Owner:** Alperen Vural (Implementation Engineer)
-**GitHub issue:** #6
+**Sprint 2 issue:** [#85](https://github.com/Orkun174/token-learning-platform/issues/85) · **Initial backlog:** #6
 
 ---
 
@@ -47,31 +47,31 @@ Each epic is divided into features, and each feature groups the user stories tha
 
 ## 2. Prioritized User Stories
 
-Stories are ordered by priority. Estimates are story points on the Fibonacci scale (1, 2, 3, 5, 8, 13). Each story is linked to the OpenAPI operation that implements it; "To be added" marks operations that will be added to the contract with the story. Owners are the proposed implementation owners.
+Stories are ordered by priority and estimated on the Fibonacci scale. Owners are the proposed implementation owners. Requirements are specified in [srs.md](srs.md). Its traceability matrix links each functional requirement to a story. API paths follow the [OpenAPI contract](../openapi.yaml).
 
-| Pri. | ID | User story | Acceptance criteria | API operation | Est. | Depends on | Owner |
-|---:|---|---|---|---|---:|---|---|
-| 1 | US-01 | As a user, I can sign in with my Google or GitHub account. | Valid provider token returns a session; invalid or expired token returns 401 `INVALID_PROVIDER_TOKEN`; first sign-in marks the user as new. | `POST /auth/login` | 5 | – | Orkun |
-| 2 | US-04 | As a user, I can see my token balance and the tokens held in escrow. | Returns `tokenBalance` and `heldTokens`; a request without a valid token returns 401. | `GET /wallet/balance` | 2 | US-01 | Alperen |
-| 3 | US-03 | As a new user, I receive a welcome balance so I can take my first lesson. | Exactly one `WELCOME_GRANT` ledger entry (e.g. 10 tokens) per account on first sign-in; never granted twice. | `POST /auth/login`, `GET /wallet/transactions` | 2 | US-01, US-04 | Alperen |
-| 4 | US-06 | As an educator, I can see a suggested price for a subject and level. | Returns `suggestedPrice`, `minPrice` and `maxPrice` (±50%); a missing subject or level returns 400. | `GET /lessons/price-suggestion` | 3 | US-01 | Onur |
-| 5 | US-07 | As an educator, I can publish a lesson listing at a price within the allowed range. | The listing is created with `suggestedPrice` and `priceIndicator`; a price outside ±50% returns 400 `PRICE_OUT_OF_RANGE`. | `POST /lessons` | 5 | US-06 | Onur |
-| 6 | US-08 | As a pupil, I can search lessons by subject, time and maximum price and see whether a price is below, around or above average. | Only matching listings are returned; each shows `priceIndicator`; an empty result returns an empty list; invalid dates return 400. | `GET /lessons` | 5 | US-07 | Onur |
-| 7 | US-09 | As a pupil, I can request a lesson slot without choosing the price myself. | `tokenCost` is copied from the listing; own lesson returns 403 `SELF_BOOKING_NOT_ALLOWED`; a taken slot returns 409 `SLOT_UNAVAILABLE`; a low balance returns 409 `INSUFFICIENT_TOKENS`. | `POST /bookings` | 8 | US-04, US-08 | Alperen |
-| 8 | US-10 | As an educator, I can confirm a booking so the pupil's tokens are held in escrow. | Status becomes `CONFIRMED`; an `ESCROW_HOLD` entry moves tokens to `heldTokens`; confirming a non-pending booking returns 409. | `POST /bookings/{id}/confirm` | 8 | US-09 | Alperen |
-| 9 | US-12 | As the system, I complete a lesson 24 hours after its end time and pay the educator. | Without a dispute, status becomes `COMPLETED` and an `ESCROW_RELEASE` entry credits the educator exactly once. | `GET /bookings/{id}` | 5 | US-10 | Arda |
-| 10 | US-11 | As a participant, I can cancel a booking and held tokens are refunded. | Status becomes `CANCELLED`; an `ESCROW_REFUND` entry returns the tokens; cancelling a completed booking returns 409. | `POST /bookings/{id}/cancel` | 5 | US-10 | Arda |
-| 11 | US-13 | As a pupil, I can open a dispute if a lesson did not take place. | Within 24 hours the status becomes `DISPUTED` and tokens stay held; after the window it returns 409 `DISPUTE_WINDOW_CLOSED`. | `POST /bookings/{id}/disputes` | 5 | US-12 | Yusuf |
-| 12 | US-15 | As a participant, I receive a meeting link after the booking is confirmed. | The link is created through the video API (or the documented stub) and is visible only to the two participants. | `GET /bookings/{id}` | 5 | US-10 | Orkun |
-| 13 | US-17 | As a participant, I can rate the other side of a completed lesson. | One rating per user per completed lesson; not completed or already rated returns 409 `ALREADY_RATED`; score must be 1–5. | `POST /bookings/{id}/ratings` | 3 | US-12 | Berat |
-| 14 | US-05 | As a user, I can see my transaction history. | Entries are listed newest first with type, amount and booking; a limit outside 1–100 returns 400. | `GET /wallet/transactions` | 3 | US-04 | Alperen |
-| 15 | US-14 | As an administrator, I can resolve a dispute by refunding the pupil or paying the educator. | The resolution creates a compensating ledger entry; balances are never edited directly; the action is logged. | To be added | 5 | US-13 | Yusuf |
-| 16 | US-16 | As a user, I receive an email when a booking is confirmed and before the lesson starts. | An email is sent on confirmation and as a reminder; a failed email does not change the booking status. | To be added | 3 | US-10 | Orkun |
-| 17 | US-02 | As a user, I can edit my profile with my skills, interests and availability. | Changes are saved and used in lesson search; invalid availability ranges return 400. | To be added | 3 | US-01 | Berat |
-| 18 | US-18 | As an educator, I can publish free short lessons and documents on my profile. | Content is visible on the profile; unsupported file types are rejected. | To be added | 5 | US-02 | Onur |
-| 19 | US-19 | As an educator, I earn a capped token reward when many users use my content. | 1 token per 10 unique users who completed at least one lesson; at most 20 tokens per month; `CONTENT_REWARD` entry. | To be added | 5 | US-18, US-03 | Arda |
-| 20 | US-20 | As a participant, I can send booking-related messages to the other side. | Only the two participants of a booking can read and send its messages. | To be added | 3 | US-09 | Yusuf |
-| 21 | US-21 | As an administrator, I can see audit logs and reported content. | Only administrators can access it; every ledger movement and admin action is listed. | To be added | 3 | US-14 | Berat |
+| Pri. | ID | Story issue | User story | Acceptance criteria | API operation | Est. | Depends on | Owner | SRS | MoSCoW | MVP |
+|---:|---|---|---|---|---|---:|---|---|---|---|---|
+| 1 | US-01 | [#110](https://github.com/Orkun174/token-learning-platform/issues/110) | As a user, I can sign in with my Google or GitHub account. | Valid provider token returns a session; invalid or expired token returns 401 `INVALID_PROVIDER_TOKEN`; first sign-in marks the user as new. | `POST /auth/login` | 5 | – | Orkun | FR-01, FR-02, FR-03 | Must | Yes |
+| 2 | US-04 | [#111](https://github.com/Orkun174/token-learning-platform/issues/111) | As a user, I can see my token balance and the tokens held in escrow. | Returns `tokenBalance` and `heldTokens`; a request without a valid token returns 401. Balances are derived from ledger entries and remain nonnegative. | `GET /wallet/balance` | 2 | US-01 | Alperen | FR-07, FR-08 | Must | Yes |
+| 3 | US-03 | [#112](https://github.com/Orkun174/token-learning-platform/issues/112) | As a new user, I receive a welcome balance so I can take my first lesson. | Exactly one `WELCOME_GRANT` ledger entry (e.g. 10 tokens) per account on first sign-in; never granted twice. | `POST /auth/login`, `GET /wallet/transactions` | 2 | US-01, US-04 | Alperen | FR-06 | Must | Yes |
+| 4 | US-06 | [#113](https://github.com/Orkun174/token-learning-platform/issues/113) | As an educator, I can see a suggested price for a subject and level. | Returns `suggestedPrice`, `minPrice` and `maxPrice` (±50%); a missing subject or level returns 400. | `GET /lessons/price-suggestion` | 3 | US-01 | Onur | FR-10 | Must | Yes |
+| 5 | US-07 | [#114](https://github.com/Orkun174/token-learning-platform/issues/114) | As an educator, I can publish a lesson listing at a price within the allowed range. | The listing is created with `suggestedPrice` and `priceIndicator`; a price outside ±50% returns 400 `PRICE_OUT_OF_RANGE`. | `POST /lessons` | 5 | US-06 | Onur | FR-11, FR-12 | Must | Yes |
+| 6 | US-08 | [#115](https://github.com/Orkun174/token-learning-platform/issues/115) | As a pupil, I can search lessons by subject, time and maximum price and see whether a price is below, around or above average. | Only matching listings are returned; each shows `priceIndicator`; an empty result returns an empty list; invalid dates return 400. | `GET /lessons` | 5 | US-07 | Onur | FR-13, FR-14 | Must | Yes |
+| 7 | US-09 | [#116](https://github.com/Orkun174/token-learning-platform/issues/116) | As a pupil, I can request a lesson slot without choosing the price myself. | `tokenCost` is copied from the listing; own lesson returns 403 `SELF_BOOKING_NOT_ALLOWED`; a taken slot returns 409 `SLOT_UNAVAILABLE`; a low balance returns 409 `INSUFFICIENT_TOKENS`. A request exceeding the repeated-lesson limit for the same pair returns 403 `REPEAT_LIMIT_REACHED` (BR-12). | `POST /bookings` | 8 | US-04, US-08 | Alperen | FR-15, FR-16 | Must | Yes |
+| 8 | US-10 | [#117](https://github.com/Orkun174/token-learning-platform/issues/117) | As an educator, I can confirm a booking so the pupil's tokens are held in escrow. | Confirmation sets `CONFIRMED` and records the pupil’s `ESCROW_HOLD` in one transaction. A booking outside `PENDING` returns 409 `INVALID_STATUS_TRANSITION`. | `POST /bookings/{bookingId}/confirm` | 8 | US-09 | Alperen | FR-17 | Must | Yes |
+| 9 | US-12 | [#118](https://github.com/Orkun174/token-learning-platform/issues/118) | As the system, I complete a lesson 24 hours after its end time and pay the educator. | Once the 24-hour dispute deadline has passed, the scheduler sets an undisputed `CONFIRMED` booking to `COMPLETED` and credits the educator through one `ESCROW_RELEASE`. Running the job again creates no further payment (BR-07, BR-13). | Scheduled completion job. Read the result with `GET /bookings/{bookingId}`. | 5 | US-10 | Arda | FR-18 | Must | Yes |
+| 10 | US-11 | [#119](https://github.com/Orkun174/token-learning-platform/issues/119) | As a participant, I can cancel a booking and held tokens are refunded. | Cancelling a `PENDING` booking sets `CANCELLED` without a ledger entry. Cancelling a `CONFIRMED` booking sets `CANCELLED` and refunds the held tokens to the pupil through `ESCROW_REFUND`. Any other status returns 409 `INVALID_STATUS_TRANSITION`. | `POST /bookings/{bookingId}/cancel` | 5 | US-10 | Arda | FR-19 | Should | No |
+| 11 | US-13 | [#120](https://github.com/Orkun174/token-learning-platform/issues/120) | As a pupil, I can open a dispute if a lesson did not take place. | A dispute submitted up to and including the deadline sets the booking to `DISPUTED` and keeps tokens held. A later request returns 409 `DISPUTE_WINDOW_CLOSED`. Concurrent dispute and completion attempts are serialized. The first saved change wins (BR-13). | `POST /bookings/{bookingId}/disputes` | 5 | US-12 | Yusuf | FR-20 | Should | No |
+| 12 | US-15 | [#121](https://github.com/Orkun174/token-learning-platform/issues/121) | As a participant, I receive a meeting link after the booking is confirmed. | The link is created through the video API (or the documented stub) and is visible only to the two participants. | `GET /bookings/{bookingId}` | 5 | US-10 | Orkun | FR-22 | Should | No |
+| 13 | US-17 | [#122](https://github.com/Orkun174/token-learning-platform/issues/122) | As a participant, I can rate the other side of a completed lesson. | Each participant may rate the other once per completed lesson, with a score of 1–5. The rating updates the recipient’s score. An incomplete lesson returns 409 `INVALID_STATUS_TRANSITION`. A duplicate rating returns 409 `ALREADY_RATED`. | `POST /bookings/{bookingId}/ratings` | 3 | US-12 | Berat | FR-24, FR-25 | Should | No |
+| 14 | US-05 | [#123](https://github.com/Orkun174/token-learning-platform/issues/123) | As a user, I can see my transaction history. | Entries are listed newest first with type, amount and booking; a limit outside 1–100 returns 400. | `GET /wallet/transactions` | 3 | US-04 | Alperen | FR-09 | Should | No |
+| 15 | US-14 | [#124](https://github.com/Orkun174/token-learning-platform/issues/124) | As an administrator, I can resolve a dispute by refunding the pupil or paying the educator. | An administrator selects `RESOLVED_REFUND` or `RESOLVED_RELEASE`. For `EDUCATOR_ABSENT`, the booking becomes `NO_SHOW` and the pupil receives a refund. Each resolution is logged and moves tokens through a compensating ledger entry. | `GET /admin/disputes`, `POST /admin/disputes/{disputeId}/resolution` | 5 | US-13 | Yusuf | FR-21 | Should | No |
+| 16 | US-16 | [#125](https://github.com/Orkun174/token-learning-platform/issues/125) | As a user, I receive an email when a booking is confirmed and before the lesson starts. | An email is sent on confirmation and as a reminder; a failed email does not change the booking status. | Confirmation event and scheduled reminder | 3 | US-10 | Orkun | FR-23 | Could | No |
+| 17 | US-02 | [#126](https://github.com/Orkun174/token-learning-platform/issues/126) | As a user, I can edit my profile with my skills, interests and availability. | Changes are saved and used in lesson search; invalid availability ranges return 400. | `GET /users/me`, `PATCH /users/me`, `GET /lessons` | 3 | US-01 | Berat | FR-04, FR-05 | Could | No |
+| 18 | US-18 | [#127](https://github.com/Orkun174/token-learning-platform/issues/127) | As an educator, I can publish free short lessons and documents on my profile. | Content is visible on the profile; unsupported file types are rejected. | `POST /contents`, `GET /users/{userId}/contents`, `GET /contents/{contentId}` | 5 | US-02 | Onur | FR-26 | Could | No |
+| 19 | US-19 | [#128](https://github.com/Orkun174/token-learning-platform/issues/128) | As an educator, I earn a capped token reward when many users use my content. | 1 token per 10 unique users who completed at least one lesson; at most 20 tokens per month; `CONTENT_REWARD` entry. | Monthly reward job. Read entries with `GET /wallet/transactions`. | 5 | US-18, US-03 | Arda | FR-27 | Could | No |
+| 20 | US-20 | [#129](https://github.com/Orkun174/token-learning-platform/issues/129) | As a participant, I can send booking-related messages to the other side. | Only the two participants of a booking can read and send its messages. | `GET /bookings/{bookingId}/messages`, `POST /bookings/{bookingId}/messages` | 3 | US-09 | Yusuf | FR-28 | Could | No |
+| 21 | US-21 | [#130](https://github.com/Orkun174/token-learning-platform/issues/130) | As an administrator, I can see audit logs and reported content. | A signed-in user can report content or behavior with a reason. The report is stored and visible to administrators. Only administrators may view reports and the audit log of ledger movements and administrative actions. | `GET /admin/audit-logs`, `GET /admin/reports`, `POST /reports` | 3 | US-14 | Berat | FR-29, FR-30, FR-31 | Could | No |
 
 ## 3. Dependencies
 
@@ -88,13 +88,15 @@ Stories are ordered by priority. Estimates are story points on the Fibonacci sca
 - The story is small enough for one sprint (13 points or less).
 - Unresolved questions have an owner.
 
-## 5. Estimate Summary
+## 5. Sprint 3 MVP and Estimate Summary
+
+The nine Must stories deliver sign-in, wallet setup, price guidance, lesson publication and search, booking, escrow confirmation and automatic payment. Sprint 3 can take on Should stories once all Must stories are complete. Could stories are deferred to the final release.
 
 | Group | Story points | Stories |
 |---|---:|---|
-| Core flow (priority 1–9) | 43 | US-01, US-04, US-03, US-06, US-07, US-08, US-09, US-10, US-12 |
-| Booking follow-up (priority 10–15) | 26 | US-11, US-13, US-15, US-17, US-05, US-14 |
-| Supporting features (priority 16–21) | 22 | US-16, US-02, US-18, US-19, US-20, US-21 |
+| Must · MVP (priority 1–9) | 43 | US-01, US-04, US-03, US-06, US-07, US-08, US-09, US-10, US-12 |
+| Should (priority 10–15) | 26 | US-11, US-13, US-15, US-17, US-05, US-14 |
+| Could (priority 16–21) | 22 | US-16, US-02, US-18, US-19, US-20, US-21 |
 | **Total** | **91** | 21 stories |
 
 ## 6. Tasks

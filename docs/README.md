@@ -1,6 +1,31 @@
-# Sprint 1 Deliverables Index
+# Deliverables Index
 
-This page maps each Sprint 1 deliverable from the assignment to its GitHub user story, issue, sub-issues, owner, and artifact, so the project documentation and the repository evidence can be matched directly.
+- **Team:** Team 6 – Token-Based Peer-to-Peer Learning Platform (SENG 321)
+- **Repository:** <https://github.com/Orkun174/token-learning-platform>
+- **Individual contributions:** [CONTRIBUTIONS.md](../CONTRIBUTIONS.md)
+
+## Sprint 2 – Requirements and Architecture
+
+- **Milestone:** [Sprint 2](https://github.com/Orkun174/token-learning-platform/milestone/1) (due November 24, 2026)
+- **Board:** [Sprint 2 - Token Learning Platform](https://github.com/users/Orkun174/projects/2)
+- **Release:** [sprint-2](https://github.com/Orkun174/token-learning-platform/releases/tag/sprint-2) ([#109](https://github.com/Orkun174/token-learning-platform/issues/109))
+- **Product backlog issues:** every user story is a GitHub issue with story points and priority: [user-story issues](https://github.com/Orkun174/token-learning-platform/issues?q=label%3Auser-story) (#110–#130)
+
+| # | Deliverable | Issue | Sub-issues | Owner (GitHub) | Artifact |
+|---|---|---|---|---|---|
+| D1 | Software Requirements Specification and refined Product Backlog | #82 | #83, #84, #85 | Azat Onur Yücesoy (ycesonur), Alperen Vural (alprnvral04) | [srs.md](srs.md) ([#133](https://github.com/Orkun174/token-learning-platform/pull/133)), [product-backlog.md](product-backlog.md) |
+| D2 | Non-functional requirements and quality-measure specification | #86 | #87, #88 | Berat Nur Yücesoy (beratycsy) | [nfr-quality.md](nfr-quality.md) ([#134](https://github.com/Orkun174/token-learning-platform/pull/134)) |
+| D3 | Figma UI/UX prototypes and user-flow diagrams | #89 | #90, #91, #92 | Yusuf Enes Perçi (YusufEnes25) | [user-flows.md](ux/user-flows.md), [figma-prototypes.md](ux/figma-prototypes.md), [ux/README.md](ux/README.md) |
+| D4 | C4 model and UML architecture document | #93 | #94, #95, #96, #97, #98, #99 | Arda Eyce (exaltedo2) | [architecture/README.md](architecture/README.md), [c4-model.md](architecture/c4-model.md), [data-model.md](architecture/data-model.md), [sequence-diagrams.md](architecture/sequence-diagrams.md), [deployment.md](architecture/deployment.md), [decisions.md](architecture/decisions.md), [openapi.yaml](../openapi.yaml) ([#143](https://github.com/Orkun174/token-learning-platform/pull/143), [#144](https://github.com/Orkun174/token-learning-platform/pull/144), [#146](https://github.com/Orkun174/token-learning-platform/pull/146)) |
+| D5 | Sprint process: board, meeting records and retrospective | #100 | #101, #102, #103 | Yusuf Enes Perçi (YusufEnes25) | [sprint-1-retrospective.md](meetings/sprint-1-retrospective.md), [sprint-2-planning.md](meetings/sprint-2-planning.md), [sprint-2-standups.md](meetings/sprint-2-standups.md) |
+| D6 | Repository, CI and Sprint 2 release | #104 | #105, #106, #107, #108, #109 | Orkun Aydın Alper (Orkun174) | [docs-check.yml](../.github/workflows/docs-check.yml) ([#131](https://github.com/Orkun174/token-learning-platform/pull/131)), this index, [CONTRIBUTIONS.md](../CONTRIBUTIONS.md), [sprint-2 release](https://github.com/Orkun174/token-learning-platform/releases/tag/sprint-2) |
+
+## Sprint 1 – Project Foundation
+
+- **Release:** [sprint-1](https://github.com/Orkun174/token-learning-platform/releases/tag/sprint-1)
+- **Board:** [Sprint 1 - Token Learning Platform](https://github.com/users/Orkun174/projects/1)
+
+This section maps each Sprint 1 deliverable from the assignment to its GitHub user story, issue, sub-issues, owner, and artifact, so the project documentation and the repository evidence can be matched directly.
 
 | # | Deliverable | User story | Issue | Sub-issues | Owner (GitHub) | Artifact |
 |---|---|---|---|---|---|---|
@@ -9,7 +34,7 @@ This page maps each Sprint 1 deliverable from the assignment to its GitHub user 
 | 3 | OpenAPI Draft | US03 | #5 | #30, #31, #32, #34, #36 | Berat Nur Yücesoy (beratycsy) | [openapi.yaml](../openapi.yaml) |
 | 4 | Team Roles and RACI Matrix | US04 | #4 | #27, #28, #29 | Yusuf Enes Perçi (YusufEnes25) | [team-roles-raci.docx](team-roles-raci.docx) |
 | 5 | GitHub Repository and Git-Flow Workflow | US05 | #2 | #49, #50, #51, #52, #53 | Orkun Aydın Alper (Orkun174) | [README.md](../README.md) (developer workflow) |
-| 6 | Initial Product Backlog | US06 | #6 | #42, #45, #47, #48 | Alperen Vural (alperenvural20056) | [product-backlog.md](product-backlog.md), [product-backlog.docx](product-backlog.docx) |
+| 6 | Initial Product Backlog | US06 | #6 | #42, #45, #47, #48 | Alperen Vural (alprnvral04) | [product-backlog.md](product-backlog.md), [product-backlog.docx](product-backlog.docx) |
 
 ## Notes
 

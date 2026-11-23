@@ -117,6 +117,7 @@ Each member adds their own Sprint 2 entry below through their own pull request, 
 
 - **Role:** DevOps Engineer
 - **Deliverable owned:** Repository, CI and Sprint 2 release ([#104](https://github.com/Orkun174/token-learning-platform/issues/104))
+- **Commits:** [commits by Orkun174](https://github.com/Orkun174/token-learning-platform/commits/develop?author=Orkun174)
 
 **Completed work:**
 
@@ -126,6 +127,11 @@ Each member adds their own Sprint 2 entry below through their own pull request, 
 - Added the Markdown lint and link check workflow: https://github.com/Orkun174/token-learning-platform/pull/131
 - Added the Sprint 2 deliverables index and the Sprint 2 branch naming rule: https://github.com/Orkun174/token-learning-platform/issues/108
 - Kept merged feature branches so the individual commit history stays intact: https://github.com/Orkun174/token-learning-platform/issues/107
+- Reviewed the Sprint 2 pull requests against the SRS, OpenAPI and repository conventions, requested changes where needed and approved them after the fixes: [#134](https://github.com/Orkun174/token-learning-platform/pull/134), [#136](https://github.com/Orkun174/token-learning-platform/pull/136), [#140](https://github.com/Orkun174/token-learning-platform/pull/140), [#144](https://github.com/Orkun174/token-learning-platform/pull/144) (changes requested, then approved) and [#135](https://github.com/Orkun174/token-learning-platform/pull/135), [#139](https://github.com/Orkun174/token-learning-platform/pull/139), [#141](https://github.com/Orkun174/token-learning-platform/pull/141), [#142](https://github.com/Orkun174/token-learning-platform/pull/142), [#145](https://github.com/Orkun174/token-learning-platform/pull/145), [#146](https://github.com/Orkun174/token-learning-platform/pull/146), [#148](https://github.com/Orkun174/token-learning-platform/pull/148), [#150](https://github.com/Orkun174/token-learning-platform/pull/150) (approved).
+- Merged the reviewed pull requests into `develop` after CI passed. Merged [#144](https://github.com/Orkun174/token-learning-platform/pull/144) with a merge commit before the stacked [#146](https://github.com/Orkun174/token-learning-platform/pull/146) so the two architecture PRs did not conflict.
+- Fixed the links broken by a teammate's GitHub username change: [#149](https://github.com/Orkun174/token-learning-platform/pull/149)
+- Closed the issues completed on `develop` by hand, because closing keywords only work on merges into `main`, and kept the board cards in the right columns.
+- Created the Sprint 2 release from `develop` to `main` with the `sprint-2` tag ([#109](https://github.com/Orkun174/token-learning-platform/issues/109)): https://github.com/Orkun174/token-learning-platform/releases/tag/sprint-2
 
 ### Azat Onur Yücesoy (Sprint 2)
 

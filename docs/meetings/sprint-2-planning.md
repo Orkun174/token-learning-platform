@@ -1,4 +1,4 @@
-﻿# Sprint 2 Planning
+# Sprint 2 Planning
 
 - **Date:** November 20, 2026
 - **Facilitator:** Yusuf Enes Perçi (`@YusufEnes25`)
@@ -9,7 +9,7 @@
 
 - **Board & Issue Setup (November 20, 2026):** Created the Sprint 2 GitHub Projects board (`Todo`, `In Progress`, `In Review`, `Done`) and populated all Sprint 2 deliverable issues (`#82`–`#109`) and refined user-story issues (`#110`–`#130`).
 - **Branching & Review Workflow:** All Sprint 2 work is developed on `feature/` branches created from `develop` and merged into `develop` after CI (`markdownlint` and link-check) passes and at least one team member approves the pull request.
-- **Follow-Up Sync:** Scheduled a 15-minute team call for **November 23, 2026** to review final Sprint 2 status before the `sprint-2` release tag.
+- **Follow-Up Sync:** Held the 15-minute team sync call on **November 23, 2026** to finalize retrospective findings (sprint-1-retrospective.md) and verify readiness for the `sprint-2` release tag.
 
 ## Action Items & Deliverable Assignments
 
